@@ -13,13 +13,13 @@ hero:
     - theme: alt
       text: 插件介绍
       link: /plugins/README.md
-    - theme: brand
+    - theme: alt
       text: MC下载链接
       link: https://mc.minebbs.com/
-      - theme: alt
+    - theme: alt
       text: 卫星地图
       link: http://123.129.230.125:5110/
-    - theme: brand
+    - theme: alt
       text: 游戏服测试
       link: /Game.md
 
