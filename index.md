@@ -13,9 +13,15 @@ hero:
     - theme: alt
       text: 插件介绍
       link: /plugins/README.md
-    - theme: alt
+    - theme: brand
       text: MC下载链接
       link: https://mc.minebbs.com/
+      - theme: alt
+      text: 卫星地图
+      link: http://123.129.230.125:5110/
+    - theme: brand
+      text: 游戏服测试
+      link: /Game.md
 
 features:
   - title: 机制丰富优良
@@ -36,7 +42,6 @@ features:
 版本：基岩版1.21.x
 IP：123.129.230.125
 端口：1
-官网:
-卫星地图：http://123.129.230.125:5110/
+官网:https://lc655254.github.io/Inspur-server-Wiki/
 官方群聊：657209397
 ```
