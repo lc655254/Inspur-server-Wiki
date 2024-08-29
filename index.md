@@ -6,6 +6,9 @@ hero:
   name: "Inspur-server Wiki"
   text: "一个不错的基岩版插件生存服务器"
   tagline: --langchao
+  image:
+    src: /logo.png
+    alt: Inspur server
   actions:
     - theme: brand
       text: 服务器介绍
