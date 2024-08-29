@@ -7,7 +7,7 @@ hero:
   text: "一个不错的基岩版插件生存服务器"
   tagline: --langchao
   image:
-    src: /Image/logo.png
+    src: /logo.png
     alt: VitePress
   actions:
     - theme: brand
