@@ -8,7 +8,6 @@ hero:
   tagline: --langchao
   image:
     src: /logo.png
-    alt: VitePress
   actions:
     - theme: brand
       text: 服务器介绍
