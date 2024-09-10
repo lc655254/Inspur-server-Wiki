@@ -4,7 +4,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "Inspur-server Wiki",
   description: "一个不错的基岩版插件生存服务器",
-  base: '/Inspur-server-Wiki',
+  base: '/',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
