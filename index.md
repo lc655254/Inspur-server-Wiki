@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "Inspur-server Wiki"
   text: "一个不错的基岩版插件生存服务器"
-  tagline: --langchao
+  tagline: --LC
   image:
     src: /logo.png
   actions:
@@ -16,7 +16,7 @@ hero:
       text: 插件介绍
       link: /plugins/README.md
     - theme: alt
-      text: MC下载链接![alt text](/Image/版本.png)
+      text: MC下载链接
       link: https://mc.minebbs.com/
 
 features:
@@ -27,7 +27,8 @@ features:
   - title: 问题及时修复
     details: 做到当天反馈当天修复 一切都为玩家的良好体验
   - title: 服主和谐友善
-    details: 有问必答 是个三好学生
+    details: 有问必答 是个三好学生 并且忠诚于老婆
+    link: https://api.west.cn/services/domaincert/?MT1pbnNwdXJzLndvcmsmMj0xNzI2MDk0NjI1JjM9MSY0PTNlMGY0Y2NlZDljZGU3YzUmNT0xNzk2NWQwZTQwYjkyNjVk
 ---
 
 ## 开始游戏
@@ -35,7 +36,7 @@ features:
 现在 你现在就可以游玩！
 
 ```sh
-版本：基岩版1.21.x
+版本：基岩版1.21.x (不支持1.21.2x)
 IP：123.129.230.125
 端口：1
 官网:https://lc655254.github.io/Inspur-server-Wiki/
