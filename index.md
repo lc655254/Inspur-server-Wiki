@@ -22,16 +22,16 @@ hero:
 features:
   - title: 机制丰富优良
     details: 多样化的各种机制等待你的开发挖掘
-    link: https://api.west.cn/services/domaincert/?MT1pbnNwdXJzLndvcmsmMj0xNzI2MDk0NjI1JjM9MSY0PTNlMGY0Y2NlZDljZGU3YzUmNT0xNzk2NWQwZTQwYjkyNjVk
+    link: /zhengshu.png
   - title: 多样玩法自由
     details: 生电、建筑、养老等等各种玩法
-    link: https://api.west.cn/services/domaincert/?MT1pbnNwdXJzLndvcmsmMj0xNzI2MDk0NjI1JjM9MSY0PTNlMGY0Y2NlZDljZGU3YzUmNT0xNzk2NWQwZTQwYjkyNjVk
+    link: /zhengshu.png
   - title: 问题及时修复
     details: 做到当天反馈当天修复 一切都为玩家的良好体验
-    link: https://api.west.cn/services/domaincert/?MT1pbnNwdXJzLndvcmsmMj0xNzI2MDk0NjI1JjM9MSY0PTNlMGY0Y2NlZDljZGU3YzUmNT0xNzk2NWQwZTQwYjkyNjVk
+    link: /zhengshu.png
   - title: 服主和谐友善
     details: 有问必答 是个三好学生 并且忠诚于老婆
-    link: https://api.west.cn/services/domaincert/?MT1pbnNwdXJzLndvcmsmMj0xNzI2MDk0NjI1JjM9MSY0PTNlMGY0Y2NlZDljZGU3YzUmNT0xNzk2NWQwZTQwYjkyNjVk
+    link: /zhengshu.png
 ---
 
 ## 开始游戏
