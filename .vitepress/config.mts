@@ -2,8 +2,9 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "Inspur-server Wiki",
-  description: "一个不错的基岩版插件生存服务器",
+  head:[['link', { rel: 'icon', href: '/logo.ico' }]],
+  title: "Inspur server",
+  description: "浪潮的MEBE插件生存服务器",
   base: '/',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
