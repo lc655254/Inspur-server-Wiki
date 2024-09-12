@@ -40,7 +40,8 @@ IP：123.129.230.125
 端口：1
 官网:https://lc655254.github.io/Inspur-server-Wiki/
 官方群聊：657209397
-![alt text](/Image/版本.png)
 ```
+
+![alt text](/Image/版本.png)
 
 ## 阿什么？ 你并未获邀在此服务器上进行游戏？进群修改群昵称为游戏 ID 发送"绑定"(不包括引号)即可进服
