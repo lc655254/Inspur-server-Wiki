@@ -22,7 +22,7 @@ hero:
 features:
   - title: 机制丰富优良
     details: 多样化的各种机制等待你的开发挖掘
-    link: /zhengshu.png
+    link: 机制多就是多 你能咋地
   - title: 多样玩法自由
     details: 生电、建筑、养老等等各种玩法
     link: /zhengshu.png
@@ -34,9 +34,7 @@ features:
     link: /zhengshu.png
 ---
 
-## 开始游戏
-
-现在 你现在就可以游玩！
+## 如何游玩
 
 ```sh
 版本：基岩版1.21.x (不支持1.21.2x)
