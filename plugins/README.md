@@ -6,19 +6,19 @@
 
 1. LeviTPSystem - 传送系统
 2. Auto-organizing - 自动整理
-3. Auto-Cleaner - 自动清理
-4. BackupHelper - 自动备份
-5. BanPl - 封禁系统
-6. BDSLM_JS - 卫星地图
-7. BehaviorLog - 行为记录
-8. BETweakerPro - 生存辅助
-9. call - 创世神
-10. CDK - 兑换系统
-11. Changeweather - 玩家付费控制天气
-12. CleanerUnknownBlock - 清理未知方块
-13. CloneItem - 复制手上方块
-14. CMENU -菜单
-15. ContentLogBlocker - 屏蔽 BDS 的 addon 报错
+3.
+4.
+5.
+6.
+7.
+8.
+9.
+10.
+11.
+12.
+13.
+14.
+15.
 
 ## 加入我们
 
