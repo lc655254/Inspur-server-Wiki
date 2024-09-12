@@ -33,7 +33,7 @@ export default defineConfig({
     socialLinks: [
       {
         icon: {
-        svg: '<img src="/tubiao.src" alt="SVG Image" width="21" height="21">'
+        svg: '<img src="/tubiao.svg" alt="SVG Image" width="21" height="21">'
       }, link: 'https://qm.qq.com/q/zTsUtxh876' }
     ]
   }

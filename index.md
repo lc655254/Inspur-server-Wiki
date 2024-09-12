@@ -22,7 +22,7 @@ hero:
 features:
   - title: 机制丰富优良
     details: 多样化的各种机制等待你的开发挖掘
-    link: 机制多就是多 你能咋地
+    link: https://www.bing.com/search?q=MC%E6%9C%BA%E5%88%B6%E5%A4%A7%E5%85%A8&qs=ds&form=QBRE
   - title: 多样玩法自由
     details: 生电、建筑、养老等等各种玩法
     link: /zhengshu.png
