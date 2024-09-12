@@ -4,9 +4,9 @@ layout: home
 
 hero:
   name: "Inspur server"
-  text: "不错的MCBE插件生存服务器"
+  text: "浪潮的MCBE插件生存服务器"
   tagline: ✨LC✨WYT✨
-  image:
+  public:
     src: /logo.png
   actions:
     - theme: brand
