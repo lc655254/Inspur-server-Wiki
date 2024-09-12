@@ -3,9 +3,9 @@
 layout: home
 
 hero:
-  name: "✨Inspur-server Wiki✨"
+  name: "Inspur-server Wiki"
   text: "一个不错的基岩版插件生存服务器"
-  tagline: --LC
+  tagline: --✨LC✨
   image:
     src: /logo.png
   actions:
