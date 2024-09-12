@@ -64,7 +64,10 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://qm.qq.com/q/zTsUtxh876' }
+      {
+        icon: {
+        svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Dribbble</title><path d="M12...6.38z"/></svg>'
+      }, link: 'https://qm.qq.com/q/zTsUtxh876' }
     ]
   }
 })
