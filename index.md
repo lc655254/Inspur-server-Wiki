@@ -30,7 +30,7 @@ features:
     details: 做到当天反馈当天修复 一切都为玩家的良好体验
     link: /zhengshu.png
   - title: 服主和谐友善
-    details: 有问必答 是个三好学生 并且忠诚于老婆
+    details: 有问必答 是个三好学生
     link: /zhengshu.png
 ---
 
