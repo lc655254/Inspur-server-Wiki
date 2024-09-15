@@ -13,9 +13,6 @@ hero:
       text: 服务器介绍
       link: /README.md
     - theme: alt
-      text: 插件介绍
-      link: /plugins/README.md
-    - theme: alt
       text: MC下载链接
       link: https://mc.minebbs.com/
 
