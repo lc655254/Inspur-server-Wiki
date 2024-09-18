@@ -27,7 +27,7 @@ features:
     details: 做到当天反馈当天修复 一切都为玩家的良好体验
     link: /zhengshu.png
   - title: 服主和谐友善
-    details: 有问必答 随便问
+    details: 有问必答 随便问我
     link: /zhengshu.png
 ---
 
