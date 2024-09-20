@@ -4,7 +4,7 @@
 
 ## 插件列表
 
-1. LeviTPSystem - 传送系统
+1. [LeviTPSystem - 传送系统](/plugins/1.md)
 2. Auto-organizing - 自动整理
 3.
 4.
