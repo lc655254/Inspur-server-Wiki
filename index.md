@@ -28,7 +28,7 @@ features:
     link: https://bugs.mojang.com/projects/MCPE/summary
   - title: 服主和谐友善
     details: 有问必答 随便问我
-    link: https://www.baidu.com/s?wd=%E9%9A%8F%E4%BE%BF%E9%97%AE&rsv_spt=1&rsv_iqid=0xa877fe4e00bdd464&issp=1&f=8&rsv_bp=1&rsv_idx=2&ie=utf-8&tn=baiduhome_pg&rsv_enter=0&rsv_dl=tb&rsv_sug3=13&rsv_sug1=19&rsv_sug7=101&rsv_btype=i&inputT=10773&rsv_sug4=11470
+    link: https://www.doubao.com/
 ---
 
 ## 如何游玩
