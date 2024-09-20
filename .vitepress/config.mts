@@ -41,6 +41,7 @@ export default defineConfig({
           { text: 'plugins 介绍', link: '/plugins/README.md' },
           { text: 'LeviTPSystem - 传送系统', link: '/plugins/1.md' },
           { text: 'Auto-organizing - 自动整理', link: '/plugins/2.md' },
+          { text: 'CDK - 兑换码', link: '/plugins/3.md' },
         ]
       }
     ],
