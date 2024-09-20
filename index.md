@@ -5,16 +5,13 @@ layout: home
 hero:
   name: "Inspur server"
   text: "浪潮的MCBE插件生存服务器"
-  tagline: ✨LC✨WYT✨
+  tagline: ✨LC✨
   public:
     src: /logo.png
   actions:
     - theme: brand
       text: 服务器介绍
       link: /README.md
-    - theme: alt
-      text: 插件介绍
-      link: /plugins/README.md
     - theme: alt
       text: MC下载链接
       link: https://mc.minebbs.com/
@@ -30,7 +27,7 @@ features:
     details: 做到当天反馈当天修复 一切都为玩家的良好体验
     link: /zhengshu.png
   - title: 服主和谐友善
-    details: 有问必答 是个三好学生
+    details: 有问必答 随便问我
     link: /zhengshu.png
 ---
 
