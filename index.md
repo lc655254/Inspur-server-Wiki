@@ -7,7 +7,7 @@ hero:
   text: "浪潮的MCBE插件生存服务器"
   tagline: ✨LC✨
   image:
-    src: /public/logo.png
+    src: /logo.png
   actions:
     - theme: brand
       text: 服务器介绍
