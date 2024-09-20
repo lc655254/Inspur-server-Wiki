@@ -5,8 +5,8 @@
 ## 插件列表
 
 1. [LeviTPSystem - 传送系统](/plugins/1.md)
-2. Auto-organizing - 自动整理
-3.
+2. [Auto-organizing - 自动整理](/plugins/2.md)
+3. [CDK - 兑换码](/plugins/3.md)
 4.
 5.
 6.
