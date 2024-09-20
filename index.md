@@ -22,13 +22,13 @@ features:
     link: https://www.bing.com/search?q=MC%E6%9C%BA%E5%88%B6%E5%A4%A7%E5%85%A8&qs=ds&form=QBRE
   - title: 多样玩法自由
     details: 生电、建筑、养老等等各种玩法
-    link: /zhengshu.png
+    link: https://cn.bing.com/search?q=MC%E7%8E%A9%E6%B3%95%E5%A4%A7%E5%85%A8&qs=n&form=QBRE&sp=-1&lq=0&pq=mc%E7%8E%A9%E6%B3%95da%27q&sc=8-8&sk=&cvid=FCB5F07C85DC4210BE5B0364A3D153CD&ghsh=0&ghacc=0&ghpl=
   - title: 问题及时修复
     details: 做到当天反馈当天修复 一切都为玩家的良好体验
-    link: /zhengshu.png
+    link: https://bugs.mojang.com/projects/MCPE/summary
   - title: 服主和谐友善
     details: 有问必答 随便问我
-    link: /zhengshu.png
+    link: https://www.baidu.com/
 ---
 
 ## 如何游玩
