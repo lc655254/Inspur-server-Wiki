@@ -18,8 +18,7 @@ hero:
      - theme: alt
       text: 官方群聊
       link: https://qm.qq.com/q/zTsUtxh876
-
-
+      
 features:
   - title: 机制丰富优良
     details: 多样化的各种机制等待你的开发挖掘
