@@ -1,4 +1,6 @@
 import { defineConfig } from 'vitepress'
+import { pagefindPlugin } from 'vitepress-plugin-pagefind'
+
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -6,6 +8,18 @@ export default defineConfig({
   title: "Inspur server",
   description: "浪潮的MEBE插件生存服务器",
   base: '/',
+  vite: {
+    plugins: [pagefindPlugin({
+      btnPlaceholder: '搜索',
+      placeholder: '搜索文档',
+      emptyText: '空空如也',
+      heading: '共: {{searchResult}} 条结果',
+      toSelect: '选择',
+      toNavigate: '切换',
+      toClose: '关闭',
+      // searchBy: '',
+    })],
+  },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -34,30 +48,6 @@ export default defineConfig({
       message: '此服务器与 Mojang Studio、网易、Microsoft 没有从属关系。',
       copyright: 'Copyright © 2023-2024 Inspur server All Rights Reserved.'
     },
-    search: {
-      provider: 'local',
-      options: {
-        locales: {
-          zh: {
-            translations: {
-              button: {
-                buttonText: '搜索文档',
-                buttonAriaLabel: '搜索文档'
-              },
-              modal: {
-                noResultsText: '无法找到相关结果',
-                resetButtonTitle: '清除查询条件',
-                footer: {
-                  selectText: '选择',
-                  navigateText: '切换'
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-
     socialLinks: [
       {
         icon: {
