@@ -15,10 +15,7 @@ hero:
     - theme: alt
       text: MC下载链接
       link: https://mc.minebbs.com/
-     - theme: alt
-      text: 官方群聊
-      link: https://qm.qq.com/q/zTsUtxh876
-      
+
 features:
   - title: 机制丰富优良
     details: 多样化的各种机制等待你的开发挖掘
@@ -40,6 +37,7 @@ features:
 版本：基岩版1.21.x (不支持1.21.2x)
 IP：敬请期待 inspur server 8.4.0
 端口：敬请期待 inspur server 8.4.0
+Q群号：657209397
 ```
 
 ## 阿什么？<br/>你并未获邀在此服务器上进行游戏？<br/>进群修改群昵称为游戏 ID 发送"绑定"(不包括引号)即可进服
