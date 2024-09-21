@@ -17,8 +17,11 @@
 11. [HealthShow - 攻击显示血量](/plugins/11.md)
 12. [IronElevator - 铁块电梯](/plugins/12.md)
 13. [LKinvincibleTime - 无敌时间](/plugins/13.md)
-14.
-15.
+14. [PlayerStatsTracker - 统计玩家数据](/plugins/14.md)
+15. [SakuSign - 签到系统](/plugins/15.md)
+16. [ShowHandItem - 展示手中物品](/plugins/16.md)
+17. [ToolRoBot - 假人](/plugins/17.md)
+18. []()
 
 ## 加入我们
 
