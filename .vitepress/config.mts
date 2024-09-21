@@ -44,6 +44,9 @@ export default defineConfig({
           { text: '兑换码', link: '/plugins/3.md' },
           { text: '自动替换工具与补充物品', link: '/plugins/4.md' },
           { text: '预览无法打开的容器', link: '/plugins/5.md' },
+          { text: '死亡掉落箱', link: '/plugins/6.md' },
+          { text: '灵魂出窍', link: '/plugins/7.md' },
+          { text: '突破下界高度', link: '/plugins/8.md' },
         ]
       }
     ],
