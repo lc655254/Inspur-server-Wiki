@@ -36,7 +36,7 @@ export default defineConfig({
         ]
       },
       {
-        text: '插件介绍介绍',
+        text: '插件介绍',
         items: [
           { text: '插件列表', link: '/plugins/README.md' },
           { text: '传送系统', link: '/plugins/1.md' },
