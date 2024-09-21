@@ -43,6 +43,7 @@ export default defineConfig({
           { text: '自动整理', link: '/plugins/2.md' },
           { text: '兑换码', link: '/plugins/3.md' },
           { text: '自动替换工具与补充物品', link: '/plugins/4.md' },
+          { text: '预览无法打开的容器', link: '/plugins/5.md' },
         ]
       }
     ],
