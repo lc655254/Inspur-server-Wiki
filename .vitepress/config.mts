@@ -47,6 +47,7 @@ export default defineConfig({
           { text: '死亡掉落箱', link: '/plugins/6.md' },
           { text: '灵魂出窍', link: '/plugins/7.md' },
           { text: '突破下界高度', link: '/plugins/8.md' },
+          { text: '禁用猪人塔', link: '/plugins/9.md' },
         ]
       }
     ],

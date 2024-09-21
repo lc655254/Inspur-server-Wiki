@@ -12,11 +12,11 @@
 6. [DeathChest - 死亡掉落箱](/plugins/6.md)
 7. [FreeCamera - 灵魂出窍](/plugins/7.md)
 8. [FuckNetherHeight - 突破下界高度](/plugins/8.md)
-9.
-10.
-11.
-12.
-13.
+9. [FuckZombifiedPiglin - 禁用猪人塔](/plugins/9.md)
+10. [GMSidebar - 侧边栏信息](/plugins/10.md)
+11. [HealthShow - 攻击显示血量](/plugins/11.md)
+12. [IronElevator - 铁块电梯](/plugins/12.md)
+13. [LKinvincibleTime - 无敌时间](/plugins/13.md)
 14.
 15.
 
