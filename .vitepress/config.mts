@@ -48,6 +48,14 @@ export default defineConfig({
           { text: '灵魂出窍', link: '/plugins/7.md' },
           { text: '突破下界高度', link: '/plugins/8.md' },
           { text: '禁用猪人塔', link: '/plugins/9.md' },
+          { text: '侧边栏信息', link: '/plugins/10.md' },
+          { text: '攻击显示血量', link: '/plugins/11.md' },
+          { text: '铁块电梯', link: '/plugins/12.md' },
+          { text: '无敌时间', link: '/plugins/13.md' },
+          { text: '统计玩家数据', link: '/plugins/14.md' },
+          { text: '签到系统', link: '/plugins/15.md' },
+          { text: '展示手中物品', link: '/plugins/16.md' },
+          { text: '假人', link: '/plugins/17.md' },
         ]
       }
     ],
