@@ -7,7 +7,7 @@
 1. [LeviTPSystem - 传送系统](/plugins/1.md)
 2. [Auto-organizing - 自动整理](/plugins/2.md)
 3. [CDK - 兑换码](/plugins/3.md)
-4.
+4. [AutoReplenishment - 自动替换工具与补充物品](/plugins/4.md)
 5.
 6.
 7.
