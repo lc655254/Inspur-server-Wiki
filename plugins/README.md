@@ -8,7 +8,7 @@
 2. [Auto-organizing - 自动整理](/plugins/2.md)
 3. [CDK - 兑换码](/plugins/3.md)
 4. [AutoReplenishment - 自动替换工具与补充物品](/plugins/4.md)
-5.
+5. [ContainerReader - 预览无法打开的容器](/plugins/5.md)
 6.
 7.
 8.
