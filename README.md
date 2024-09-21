@@ -19,9 +19,9 @@
 
 ## 服务器版本
 
-- [1.21.0-1.21.3](https://mc.minebbs.com/version/409)
+- [1.21.x](https://mc.minebbs.com/version/409)
 - [![alt text](/public/版本.png)](https://mc.minebbs.com/version/409)
-- 注：点击图片可以跳转对应服务器版本的下载链接
+- 注：点击图片或版本号可以跳转对应服务器版本的下载链接
 
 ## 加入我们
 
