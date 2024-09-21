@@ -33,7 +33,7 @@ features:
 
 ## 如何游玩
 
-```点我可以复制哦
+```
 版本：基岩版1.21.x (不支持1.21.2x)
 IP：敬请期待 inspur server 8.4.0
 端口：敬请期待 inspur server 8.4.0
