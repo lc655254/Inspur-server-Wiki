@@ -15,6 +15,9 @@ hero:
     - theme: alt
       text: MC下载链接
       link: https://mc.minebbs.com/
+    - theme: alt
+      text: 想玩的快来点我加入群聊！
+      link: https://qm.qq.com/q/46c2WQlMG4
 
 features:
   - title: 机制丰富优良
