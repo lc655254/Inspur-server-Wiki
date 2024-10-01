@@ -19,6 +19,8 @@
 
 ## 服务器版本
 
+地图种子：241001
+[点我快速跳转种子网站](https://www.chunkbase.com/apps/seed-map#seed=241001&platform=bedrock_1_21&dimension=overworld&x=0&z=0&zoom=0.5)
 [1.21.x](https://mc.minebbs.com/version/409)<br/>
 [![alt text](/public/版本.png)](https://mc.minebbs.com/version/409)<br/>
 注：点击图片或版本号可以跳转对应服务器版本的下载链接
