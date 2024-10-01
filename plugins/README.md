@@ -20,8 +20,9 @@
 14. [PlayerStatsTracker - 统计玩家数据](/plugins/14.md)
 15. [SakuSign - 签到系统](/plugins/15.md)
 16. [ShowHandItem - 展示手中物品](/plugins/16.md)
-17. [ToolRoBot - 假人](/plugins/17.md)
-18.
+17. [ToolRoBot - 假人系统](/plugins/17.md)
+18. [Change - 付费更换天气/时间](/plugins/18.md)
+19. [Practice_God - 修仙系统](/plugins/19.md)
 
 ## 加入我们
 

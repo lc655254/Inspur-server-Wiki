@@ -55,7 +55,9 @@ export default defineConfig({
           { text: '统计玩家数据', link: '/plugins/14.md' },
           { text: '签到系统', link: '/plugins/15.md' },
           { text: '展示手中物品', link: '/plugins/16.md' },
-          { text: '假人', link: '/plugins/17.md' },
+          { text: '假人系统', link: '/plugins/17.md' },
+          { text: '付费更换天气/时间', link: '/plugins/18.md' },
+          { text: '修仙系统', link: '/plugins/19.md' },
         ]
       }
     ],
