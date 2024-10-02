@@ -23,6 +23,7 @@
 17. [ToolRoBot - 假人系统](/plugins/17.md)
 18. [Change - 付费更换天气/时间](/plugins/18.md)
 19. [Practice_God - 修仙系统](/plugins/19.md)
+20. [CoralFans - 生电地毯](https://coralfans-dev.github.io/CoralFans-doc/#/MainDoc)
 
 ## 加入我们
 

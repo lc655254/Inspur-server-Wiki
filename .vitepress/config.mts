@@ -58,6 +58,7 @@ export default defineConfig({
           { text: '假人系统', link: '/plugins/17.md' },
           { text: '付费更换天气/时间', link: '/plugins/18.md' },
           { text: '修仙系统', link: '/plugins/19.md' },
+          { text: '生电地毯', link: 'https://coralfans-dev.github.io/CoralFans-doc/#/MainDoc' },
         ]
       }
     ],
