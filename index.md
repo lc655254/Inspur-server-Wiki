@@ -16,6 +16,9 @@ hero:
       text: MC下载链接
       link: https://mc.minebbs.com/
     - theme: alt
+      text: 卫星地图
+      link: http://47.76.62.241:46444/
+    - theme: alt
       text: 想玩的快来点我加入群聊！
       link: https://qm.qq.com/q/46c2WQlMG4
 
