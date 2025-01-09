@@ -11,6 +11,7 @@
 - [√] 优化良好
 - [√] 机制完善
 - [√] 问题修复有效率
+- [√] 杜绝一切作弊行为
 
 ## 服务器插件功能
 
@@ -18,11 +19,13 @@
 - [√] 基于原版进一步的辅助插件
 - [√] 群组互通
 - [√] QBOT 绑定游戏
+- [√] 怪物数值增强
+- [√] 超越底层代码的机制
 
 ## 服务器版本/信息
 
-地图种子：241001
-[点我快速跳转种子网站](https://www.chunkbase.com/apps/seed-map#seed=241001&platform=bedrock_1_21&dimension=overworld&x=0&z=0&zoom=0.5)<br/>模拟距离：8<br/>
+地图种子：241208
+[点我快速跳转种子网站](https://www.chunkbase.com/apps/seed-map#seed=241208&platform=bedrock_1_21&dimension=overworld&x=0&z=0&zoom=0.5)<br/>模拟距离：12<br/>
 [1.21.x](https://mc.minebbs.com/version/409)<br/>
 [![alt text](/public/版本.png)](https://mc.minebbs.com/version/409)<br/>
 注：点击图片或版本号可以跳转对应服务器版本的下载链接
