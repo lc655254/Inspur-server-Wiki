@@ -13,6 +13,9 @@ hero:
       text: 服务器介绍
       link: /README.md
     - theme: alt
+      text: 卫星地图
+      link: http://47.76.62.241:51907/
+    - theme: alt
       text: MC下载链接
       link: https://mc.minebbs.com/
     - theme: alt
