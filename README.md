@@ -1,6 +1,10 @@
-# Inspur server 8.5.1
+# Inspur server 8.5.2
 
 > 一个基于原版不断向外拓展的基岩版服务器
+
+## 玩法说明：
+
+[点我跳转到游戏规则](<(/plugins/GZ.md)>)
 
 ## 初衷
 
@@ -25,9 +29,9 @@
 ## 服务器版本/信息
 
 地图种子：241208
-[点我快速跳转种子网站](https://www.chunkbase.com/apps/seed-map#seed=241208&platform=bedrock_1_21&dimension=overworld&x=0&z=0&zoom=0.5)<br/>模拟距离：8<br/>
-[1.21.x](https://mc.minebbs.com/version/409)<br/>
-[![alt text](/public/版本.png)](https://mc.minebbs.com/version/409)<br/>
+[点我快速跳转种子网站](https://www.chunkbase.com/apps/seed-map#seed=241208&platform=bedrock_1_21_50&dimension=overworld&x=0&z=0&zoom=0.5)<br/>模拟距离：8<br/>
+[1.21.5x](https://mc.minebbs.com/version/456)<br/>
+[![alt text](/public/版本.png)](https://mc.minebbs.com/version/456)<br/>
 注：点击图片或版本号可以跳转对应服务器版本的下载链接
 
 ## 加入我们
