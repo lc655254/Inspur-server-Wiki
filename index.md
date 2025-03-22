@@ -35,6 +35,9 @@ features:
   - title: 服主和谐友善
     details: 有问必答 随便问我
     link: https://www.doubao.com/
+    - title: 服主和谐友善
+    details: 有问必答 随便问我
+    link: https://www.doubao.com/
 ---
 
 ## 如何游玩
