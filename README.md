@@ -1,4 +1,4 @@
-# Inspur server 8.5.3
+# Inspur server 8.5.x
 
 > 一个基于原版不断向外拓展的基岩版服务器
 
