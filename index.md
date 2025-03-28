@@ -14,7 +14,7 @@ hero:
       link: /README.md
     - theme: alt
       text: 卫星地图
-      link: http://47.76.62.241:51907/
+      link: [http://47.76.62.241:51907/](http://a8dd2223-29fb-e6d9-755f-db5234b9bee9.ofalias.com:22222/)
     - theme: alt
       text: MC下载链接
       link: https://mc.minebbs.com/
