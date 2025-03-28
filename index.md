@@ -14,7 +14,7 @@ hero:
       link: /README.md
     - theme: alt
       text: 卫星地图
-      link: [http://47.76.62.241:51907/](http://a8dd2223-29fb-e6d9-755f-db5234b9bee9.ofalias.com:22222/)
+      link: http://a8dd2223-29fb-e6d9-755f-db5234b9bee9.ofalias.com:22222
     - theme: alt
       text: MC下载链接
       link: https://mc.minebbs.com/
@@ -35,7 +35,7 @@ features:
   - title: 服主和谐友善
     details: 有问必答 随便问我
     link: https://www.doubao.com/
-    - title: 服主和谐友善
+  - title: 服主和谐友善
     details: 有问必答 随便问我
     link: https://www.doubao.com/
 ---
