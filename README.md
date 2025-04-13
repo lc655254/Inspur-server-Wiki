@@ -2,10 +2,6 @@
 
 > 一个基于原版不断向外拓展的基岩版服务器
 
-## 玩法说明：
-
-[点我跳转到游戏规则](/plugins/GZ.md)
-
 ## 初衷
 
 > 1.为基岩版玩家们提供一个相对良好的联机平台<br>2.让基岩版玩家体验到联机的快乐<br>3.针对玩家体验 不断创新不断发展 希望 BEMC 也有属于它自己的特点
@@ -19,20 +15,21 @@
 
 ## 服务器插件功能
 
-- [√] TP 系列传送
 - [√] 基于原版进一步的辅助插件
-- [√] 群组互通
+- [√] 超全面成就系统
 - [√] QBOT 绑定游戏
-- [√] 怪物数值增强
 - [√] 超越底层代码的机制
 
-## 服务器版本/信息
+## 服务器存档信息
 
 地图种子：241208
-[点我快速跳转种子网站](https://www.chunkbase.com/apps/seed-map#seed=241208&platform=bedrock_1_21_50&dimension=overworld&x=0&z=0&zoom=0.5)<br/>模拟距离：8<br/>
-[1.21.5x](https://mc.minebbs.com/version/456)<br/>
-[![alt text](/public/版本.png)](https://mc.minebbs.com/version/456)<br/>
-注：点击图片或版本号可以跳转对应服务器版本的下载链接
+[点我快速跳转种子网站](https://www.chunkbase.com/apps/seed-map#seed=241208&platform=bedrock_1_21_60&dimension=overworld&x=0&z=0&zoom=0.5)
+<br/>
+模拟距离：8
+<br/>
+死亡不掉落
+<br/>
+丰富附加包玩法 如农夫乐事、家具
 
 ## 加入我们
 

@@ -14,7 +14,7 @@ hero:
       link: /README.md
     - theme: alt
       text: 卫星地图
-      link: http://47.76.62.241:51907/
+      link: http://a8dd2223-29fb-e6d9-755f-db5234b9bee9.ofalias.com:22222
     - theme: alt
       text: MC下载链接
       link: https://mc.minebbs.com/
@@ -35,7 +35,7 @@ features:
   - title: 服主和谐友善
     details: 有问必答 随便问我
     link: https://www.doubao.com/
-    - title: 服主和谐友善
+  - title: 服主和谐友善
     details: 有问必答 随便问我
     link: https://www.doubao.com/
 ---
@@ -43,7 +43,7 @@ features:
 ## 如何游玩
 
 ```点我可以复制哦~
-版本：基岩版1.21.5x-1.21.6x
+版本：基岩版1.21.5x-1.21.7x
 IP：103.85.86.192
 端口：52700
 ```
