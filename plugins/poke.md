@@ -10,4 +10,4 @@
 ### 按照图片说明合成精灵球，然后拿出精灵球靠近生物，右键就可以对生物进行捕捉。 PS:如果捕捉失败会消耗精灵球哦~
 
 ![alt text](/public/poke1.png)
-![alt text](/public/poke_list.png)
+![alt text](/public/poke_list1.png)
