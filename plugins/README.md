@@ -24,6 +24,7 @@
 18. [Change - 付费更换天气/时间](/plugins/18.md)
 19. [Practice_God - 修仙系统](/plugins/19.md)
 20. [CoralFans - 生电地毯](https://coralfans-dev.github.io/CoralFans-doc/#/MainDoc)
+21. [PokeCatch —— 通过精灵球捕捉生物](/plugins/poke.md)
 
 ## 加入我们
 
