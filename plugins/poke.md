@@ -13,6 +13,6 @@
 
 ![alt text](/public/poke_list1.png)
 
-### 捕捉后背包里的效果
+### 捕捉后背包的效果
 
 ![alt text](/public/poke_catch.png)
