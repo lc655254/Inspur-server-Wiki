@@ -56,6 +56,7 @@ export default defineConfig({
           { text: '可投掷的烈焰弹', link: '/plugins/0504-3-lieyandan.md' },
           { text: '生电功能插件', link: 'https://coralfans-dev.github.io/CoralFans-doc/#/MainDoc' },
           { text: '灵魂出窍', link: '/plugins/fc.md' },
+          { text: '领地系统', link: '/plugins/Pland.md' },
         ]
       }
     ],
