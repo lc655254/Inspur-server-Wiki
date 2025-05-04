@@ -34,7 +34,7 @@ features:
     link: https://bugs.mojang.com/projects/MCPE/summary
   - title: 服主和谐友善
     details: 有问必答 随便问我
-    link: /这是一个下载测试的文件.txt
+    link: https://www.doubao.com/
 ---
 
 ## 如何游玩
