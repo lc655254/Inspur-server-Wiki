@@ -22,9 +22,6 @@
 16. [CoralFans - 生电功能插件](https://coralfans-dev.github.io/CoralFans-doc/#/MainDoc?id=coralfans)
 17. [FreeCamera - 灵魂出窍](/plugins/fc.md)
 
-## 插件列表855可能上线
-
-1. [IronElevator - 铁块电梯](/plugins/12.md)
 
 ## 加入我们
 
