@@ -1,4 +1,4 @@
-# Spells - 卷轴
+# SpellsEnhancement - 强化卷轴
 
 
 ## 卷轴
