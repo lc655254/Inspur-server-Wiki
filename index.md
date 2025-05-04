@@ -14,7 +14,7 @@ hero:
       link: /README.md
     - theme: alt
       text: 卫星地图
-      link: map.inspurs.work:22222
+      link: http://map.inspurs.work:22222/
     - theme: alt
       text: MC下载链接
       link: https://mc.minebbs.com/
