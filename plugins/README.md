@@ -20,6 +20,7 @@
 14. [ThrowableFireball - 可投掷的烈焰弹](/plugins/0504-3-lieyandan.md)
 15. [CoralFans - 生电功能插件](https://coralfans-dev.github.io/CoralFans-doc/#/MainDoc?id=coralfans)
 16. [FreeCamera - 灵魂出窍](/plugins/fc.md)
+17. [PLand - 领地系统](/plugins/Pland.md)
 
 ## 加入我们
 
