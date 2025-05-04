@@ -24,7 +24,7 @@
 
 ## 插件列表855可能上线
 
-12. [IronElevator - 铁块电梯](/plugins/12.md)
+1. [IronElevator - 铁块电梯](/plugins/12.md)
 
 ## 加入我们
 
