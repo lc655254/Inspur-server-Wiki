@@ -21,6 +21,7 @@
 15. [ThrowableFireball - 可投掷的烈焰弹](/plugins/0504-3-lieyandan.md)
 16. [CoralFans - 生电功能插件](https://coralfans-dev.github.io/CoralFans-doc/#/MainDoc?id=coralfans)
 17. [FreeCamera - 灵魂出窍](/plugins/fc.md)
+18. [ShitCraft - 奥利给系列](/plugins/0511-alg.md)
 
 
 ## 加入我们
