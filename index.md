@@ -14,7 +14,7 @@ hero:
       link: /README.md
     - theme: alt
       text: 卫星地图
-      link: http://a8dd2223-29fb-e6d9-755f-db5234b9bee9.ofalias.com:22222
+      link: http://map.inspurs.work:22222/
     - theme: alt
       text: MC下载链接
       link: https://mc.minebbs.com/
@@ -34,14 +34,14 @@ features:
     link: https://bugs.mojang.com/projects/MCPE/summary
   - title: 服主和谐友善
     details: 有问必答 随便问我
-    link: /这是一个下载测试的文件.txt
+    link: https://www.doubao.com/
 ---
 
 ## 如何游玩
 
 ```点我可以复制哦~
 版本：基岩版1.21.5x-1.21.7x
-IP：103.85.86.192
+IP：mc.inspurs.work
 端口：52700
 ```
 

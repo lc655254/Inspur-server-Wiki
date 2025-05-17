@@ -22,8 +22,7 @@
 16. [CoralFans - 生电功能插件](https://coralfans-dev.github.io/CoralFans-doc/#/MainDoc?id=coralfans)
 17. [FreeCamera - 灵魂出窍](/plugins/fc.md)
 18. [ShitCraft - 奥利给系列](/plugins/0511-alg.md)
-
-
+19. [PLand - 领地系统](/plugins/Pland.md)
 ## 加入我们
 
 > 如果你有更好的想法或者有任何的疑问，可以加群给我们提供反馈, 欢迎加入我们的 QQ 群：657209397
