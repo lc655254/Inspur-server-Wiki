@@ -47,17 +47,16 @@ export default defineConfig({
           { text: '突破下界高度', link: '/plugins/8.md' },
           { text: '侧边栏信息', link: '/plugins/10.md' },
           { text: '无敌时间', link: '/plugins/13.md' },
-          { text: '统计玩家数据', link: '/plugins/14.md' },
           { text: '签到系统', link: '/plugins/15.md' },
           { text: '假人系统', link: '/plugins/17.md' },
           { text: '通过精灵球捕捉生物', link: '/plugins/poke.md' },
-          { text: '宝石强化', link: '/plugins/0504-1-zbqh.md' },
-          { text: '强化卷轴', link: '/plugins/0504-2-juanzhou.md' },
-          { text: '可投掷的烈焰弹', link: '/plugins/0504-3-lieyandan.md' },
+          { text: '强化宝石', link: '/plugins/qhbs.md' },
+          { text: '强化卷轴', link: '/plugins/qhjz.md' },
+          { text: '可投掷的烈焰弹', link: '/plugins/lyd.md' },
           { text: '生电功能插件', link: 'https://coralfans-dev.github.io/CoralFans-doc/#/MainDoc' },
           { text: '灵魂出窍', link: '/plugins/fc.md' },
-          { text: '奥里给系列', link: '/plugins/0511-alg.md' },
-          { text: '领地系统', link: '/plugins/Pland.md' }
+          { text: '奥里给系列', link: '/plugins/alg.md' },
+          { text: '领地系统', link: '/plugins/pland.md' }
         ]
       }
     ],
