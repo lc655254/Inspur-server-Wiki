@@ -1,4 +1,4 @@
-# GemEnhancement - 宝石强化
+# GemEnhancement - 强化宝石
 
 > 玩家们可以使用宝石强化自己的装备
 
