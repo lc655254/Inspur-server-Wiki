@@ -16,8 +16,8 @@ hero:
       text: 卫星地图
       link: http://map.inspurs.work:22222/
     - theme: alt
-      text: MC下载链接
-      link: https://mc.minebbs.com/
+      text: 更新日志
+      link: /UPDATE.md
     - theme: alt
       text: 想玩的快来点我加入群聊！
       link: https://qm.qq.com/q/46c2WQlMG4
