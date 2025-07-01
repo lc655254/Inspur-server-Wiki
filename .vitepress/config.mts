@@ -56,6 +56,7 @@ export default defineConfig({
           { text: '生电功能插件', link: 'https://coralfans-dev.github.io/CoralFans-doc/#/MainDoc' },
           { text: '灵魂出窍', link: '/plugins/fc.md' },
           { text: '卫星地图菜单', link: '/plugins/bdslm.md' },
+          { text: '奥力给工艺', link: '/plugins/alg.md' },          
           { text: '领地系统', link: '/plugins/Pland.md' }
         ]
       }

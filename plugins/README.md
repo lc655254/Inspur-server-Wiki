@@ -22,6 +22,7 @@
 16. [FreeCamera - 灵魂出窍](/plugins/fc.md)
 17. [Pladn - 领地系统](/plugins/Pland.md)
 18. [bdslm - 卫星地图菜单](/plugins/bdslm.md)
+19. [ShitCraft - 奥利给工艺](/plugins/alg.md)
 
 ## 加入我们
 
