@@ -10,5 +10,3 @@ IP：mc.inspurs.work
 端口：26755
 ```
 
-![alt text](/public/7.png)
-![alt text](/public/7-2.png)

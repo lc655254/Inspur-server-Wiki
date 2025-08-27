@@ -66,7 +66,7 @@ export default defineConfig({
       // is on `config` directory.
       '/island/': [
         {
-          text: 'Config',
+          text: '空岛服Wiki',
           items: [
             { text: '空岛服介绍', link: '/island/README.md' },
             { text: '传送系统', link: '/island/three' },
