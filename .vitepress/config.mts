@@ -25,7 +25,8 @@ export default defineConfig({
     nav: [
       { text: '主页面', link: '/' },
       { text: '服务器介绍', link: '/README.md' },
-      { text: '插件列表', link: '/plugins/README.md' }
+      { text: '空岛服Wiki', link: '/island/README.md' },
+      { text: '生存服插件列表', link: '/plugins/README.md' }
     ],
 
     sidebar: {
