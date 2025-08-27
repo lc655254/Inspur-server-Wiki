@@ -67,4 +67,4 @@ export default defineConfig({
       }, link: 'https://qm.qq.com/q/zTsUtxh876' }
     ]
   }
-})
+))
