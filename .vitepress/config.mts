@@ -79,7 +79,7 @@ export default defineConfig({
         ]
       }
     ],
-    ]
+    }
     footer: {
       message: '此服务器与 Mojang Studio、网易、Microsoft 没有从属关系。',
       copyright: 'Copyright © 2023-2024 Inspur server All Rights Reserved.'
