@@ -62,7 +62,7 @@ export default defineConfig({
         ]
       }
     ],
-    '/': [
+    '/test/': [
       {
         text: '服务器介绍',
         items: [
@@ -73,25 +73,7 @@ export default defineConfig({
         text: '插件介绍',
         items: [
           { text: '插件列表', link: '/plugins/README.md' },
-          { text: '传送系统', link: '/plugins/1.md' },
-          { text: '自动整理', link: '/plugins/2.md' },
-          { text: '兑换码', link: '/plugins/3.md' },
-          { text: '发射器破坏方块', link: '/plugins/4.md' },
-          { text: '钱包', link: '/plugins/7.md' },
-          { text: '突破下界高度', link: '/plugins/8.md' },
-          { text: '侧边栏信息', link: '/plugins/10.md' },
-          { text: '无敌时间', link: '/plugins/13.md' },
-          { text: '签到系统', link: '/plugins/15.md' },
-          { text: '假人系统', link: '/plugins/17.md' },
-          { text: '通过精灵球捕捉生物', link: '/plugins/poke.md' },
-          { text: '强化宝石', link: '/plugins/qhbs.md' },
-          { text: '强化卷轴', link: '/plugins/qhjz.md' },
-          { text: '可投掷的烈焰弹', link: '/plugins/lyd.md' },
-          { text: '生电功能插件', link: 'https://coralfans-dev.github.io/CoralFans-doc/#/MainDoc' },
-          { text: '灵魂出窍', link: '/plugins/fc.md' },
-          { text: '卫星地图菜单', link: '/plugins/bdslm.md' },
-          { text: '奥力给工艺', link: '/plugins/alg.md' },          
-          { text: '领地系统', link: '/plugins/Pland.md' }
+
         ]
       }
     ],
