@@ -68,9 +68,16 @@ export default defineConfig({
         {
           text: 'Config',
           items: [
-            { text: '测试1', link: '/island/' },
-            { text: '测试2', link: '/island/three' },
-            { text: '测试3', link: '/island/four' }
+            { text: '空岛服介绍', link: '/island/README.md' },
+            { text: '传送系统', link: '/island/three' },
+            { text: '商店系统', link: '/island/README.md' },
+            { text: '工会系统', link: '/island/three' }, 
+            { text: '岛屿设置', link: '/island/three' },
+            { text: '岛屿挑战-入门', link: '/island/task1.md' },
+            { text: '岛屿挑战-初阶', link: '/island/task2.md' },  
+            { text: '岛屿挑战-进阶', link: '/island/task3.md' },
+            { text: '岛屿挑战-高阶', link: '/island/task4.md' },  
+            { text: '岛屿挑战-大师', link: '/island/task5.md' }
           ]
         }
       ]
