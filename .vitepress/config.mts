@@ -28,8 +28,10 @@ export default defineConfig({
       { text: '插件列表', link: '/plugins/README.md' }
     ],
 
-    sidebar: [
-    '/plugins/': [
+    sidebar: {
+      // This sidebar gets displayed when a user
+      // is on `guide` directory.
+      '/plugins/': [
       {
         text: '服务器介绍',
         items: [
