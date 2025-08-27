@@ -32,12 +32,7 @@ export default defineConfig({
       // This sidebar gets displayed when a user
       // is on `guide` directory.
       '/plugins/': [
-      {
-        text: '服务器介绍',
-        items: [
-          { text: '服务器介绍', link: '/README.md' }
-        ]
-      },
+
       {
         text: '插件介绍',
         items: [
