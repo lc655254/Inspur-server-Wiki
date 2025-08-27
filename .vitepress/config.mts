@@ -29,6 +29,7 @@ export default defineConfig({
     ],
 
     sidebar: [
+    '/plugins/': [
       {
         text: '服务器介绍',
         items: [
