@@ -69,10 +69,10 @@ export default defineConfig({
           text: '空岛服Wiki',
           items: [
             { text: '空岛服介绍', link: '/island/README.md' },
-            { text: '传送系统', link: '/island/three' },
-            { text: '商店系统', link: '/island/README.md' },
-            { text: '工会系统', link: '/island/three' }, 
-            { text: '岛屿设置', link: '/island/three' },
+            { text: '传送系统', link: '/island/tpa.md' },
+            { text: '商店系统', link: '/island/sm.md' },
+            { text: '工会系统', link: '/island/ghxt.md' }, 
+            { text: '岛屿设置', link: '/island/dysz.md' },
             { text: '岛屿挑战-入门', link: '/island/task1.md' },
             { text: '岛屿挑战-初阶', link: '/island/task2.md' },  
             { text: '岛屿挑战-进阶', link: '/island/task3.md' },
@@ -81,7 +81,7 @@ export default defineConfig({
           ]
         }
       ]
-    }
+    },
 },
     footer: {
       message: '此服务器与 Mojang Studio、网易、Microsoft 没有从属关系。',
