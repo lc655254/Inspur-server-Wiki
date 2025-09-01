@@ -32,6 +32,16 @@ export default defineConfig({
     sidebar: {
       // This sidebar gets displayed when a user
       // is on `guide` directory.
+
+      '/': [
+        {
+          text: '服务器介绍',
+          items: [
+          { text: '生存服介绍', link: '/README.md' },
+          { text: '空岛服介绍', link: '/island/README.md' },
+          { text: '更新日志', link: '/UPDATE.md' },
+          ]
+      ],
       '/plugins/': [
         {
           text: '插件介绍',
@@ -59,6 +69,7 @@ export default defineConfig({
           { text: '奥里给系列', link: '/plugins/alg.md' },
           { text: '领地系统', link: '/plugins/pland.md' },
           ]
+        }
         }
       ],
 
