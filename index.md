@@ -48,5 +48,6 @@ IP：mc.inspurs.work
 IP：mc.inspurs.work
 端口：26755
 ```
+<iframe id="mc-status-mc-inspurs-work-52700" frameborder="0" width="700" style="max-width:100%;" scrolling="no" src="https://motd.minebbs.com/iframe?ip=mc.inspurs.work&port=52700&stype=be&dark=false"></iframe>
 
 ## 什么？<br/>你并未获邀在此服务器上进行游戏？<br/>进群修改群昵称为游戏 ID<br/> 并发送"绑定"即可进服
