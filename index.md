@@ -48,5 +48,27 @@ IP：mc.inspurs.work
 IP：mc.inspurs.work
 端口：26755
 ```
-![alt text](https://motd.minebbs.com/api/status_img?ip=mc.inspurs.work&port=52700&stype=be&theme=dark_tech)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>自动刷新图片</title>
+</head>
+<body>
+    
+    <img id="refreshImage" src="https://motd.minebbs.com/api/status_img?ip=mc.inspurs.work&port=52700&stype=be&theme=dark_tech" width="500">
+    
+    <script>
+        function refreshImage() {
+            const img = document.getElementById('refreshImage');
+            // 添加时间戳参数避免缓存
+            img.src = img.src.split('?')[0] + '?t=' + new Date().getTime();
+        }
+        
+        // 每秒刷新一次
+        setInterval(refreshImage, 1000);
+    </script>
+</body>
+</html>
+
 ## 什么？<br/>你并未获邀在此服务器上进行游戏？<br/>进群修改群昵称为游戏 ID<br/> 并发送"绑定"即可进服
