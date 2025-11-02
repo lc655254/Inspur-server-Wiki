@@ -48,6 +48,5 @@ IP：mc.inspurs.work
 IP：mc.inspurs.work
 端口：26755
 ```
-/api/status_img?ip=mc.inspurs.work&port=52700&stype=be&theme=dark_tech
 
 ## 什么？<br/>你并未获邀在此服务器上进行游戏？<br/>进群修改群昵称为游戏 ID<br/> 并发送"绑定"即可进服
