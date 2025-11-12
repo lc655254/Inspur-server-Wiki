@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: "Inspur server"
+  name: "Cloudspur - 云潮"
   text: "浪潮的MCBE插件生存服务器"
   tagline: ✨LC✨
   image:
@@ -40,13 +40,7 @@ features:
 ## 如何游玩
 
 ```点我可以复制哦~
-生存服
-IP：mc.inspurs.work
-端口：52700
-
-空岛服
-IP：mc.inspurs.work
-端口：26755
+请敬请期待 cloudspur - 云潮 ~
 ```
 
 ## 什么？<br/>你并未获邀在此服务器上进行游戏？<br/>进群修改群昵称为游戏 ID<br/> 并发送"绑定"即可进服
