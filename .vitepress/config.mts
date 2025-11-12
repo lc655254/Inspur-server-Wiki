@@ -25,19 +25,27 @@ export default defineConfig({
     nav: [
       { text: '主页面', link: '/' },
       { text: '服务器介绍', link: '/README.md' },
-      { text: '插件列表', link: '/plugins/README.md' }
+      { text: '空岛服Wiki', link: '/island/README.md' },
+      { text: '生存服插件列表', link: '/plugins/README.md' }
     ],
 
-    sidebar: [
-      {
-        text: '服务器介绍',
-        items: [
-          { text: '服务器介绍', link: '/README.md' }
-        ]
-      },
-      {
-        text: '插件介绍',
-        items: [
+    sidebar: {
+      // This sidebar gets displayed when a user
+      // is on `guide` directory.
+      '/': [
+        {
+          text: '服务器介绍',
+          items: [
+          { text: '生存服介绍', link: '/README.md' },
+          { text: '空岛服介绍', link: '/island/README.md' },
+          { text: '更新日志', link: '/UPDATE.md' },
+          ]
+       }
+      ],
+      '/plugins/': [
+        {
+          text: '插件介绍',
+          items: [
           { text: '插件列表', link: '/plugins/README.md' },
           { text: '传送系统', link: '/plugins/1.md' },
           { text: '自动整理', link: '/plugins/2.md' },
@@ -53,14 +61,37 @@ export default defineConfig({
           { text: '强化宝石', link: '/plugins/qhbs.md' },
           { text: '强化卷轴', link: '/plugins/qhjz.md' },
           { text: '可投掷的烈焰弹', link: '/plugins/lyd.md' },
-          { text: '生电功能插件', link: 'https://coralfans-dev.github.io/CoralFans-doc/#/MainDoc' },
+          {
+            text: '生电功能插件',
+            link: 'https://coralfans-dev.github.io/CoralFans-doc/#/MainDoc',
+          },
           { text: '灵魂出窍', link: '/plugins/fc.md' },
-          { text: '卫星地图菜单', link: '/plugins/bdslm.md' },
-          { text: '奥力给工艺', link: '/plugins/alg.md' },          
-          { text: '领地系统', link: '/plugins/Pland.md' }
-        ]
-      }
-    ],
+          { text: '奥里给系列', link: '/plugins/alg.md' },
+          { text: '领地系统', link: '/plugins/pland.md' },
+          ]
+        }
+      ],
+
+      // This sidebar gets displayed when a user
+      // is on `config` directory.
+      '/island/': [
+        {
+          text: '空岛服Wiki',
+          items: [
+            { text: '空岛服介绍', link: '/island/README.md' },
+            { text: '传送系统', link: '/island/tpa.md' },
+            { text: '商店系统', link: '/island/sm.md' },
+            { text: '工会系统', link: '/island/ghxt.md' }, 
+            { text: '岛屿设置', link: '/island/dysz.md' },
+            { text: '岛屿挑战-入门', link: '/island/task1.md' },
+            { text: '岛屿挑战-初阶', link: '/island/task2.md' },  
+            { text: '岛屿挑战-进阶', link: '/island/task3.md' },
+            { text: '岛屿挑战-高阶', link: '/island/task4.md' },  
+            { text: '岛屿挑战-大师', link: '/island/task5.md' }
+          ]
+        }
+      ]
+    },
     footer: {
       message: '此服务器与 Mojang Studio、网易、Microsoft 没有从属关系。',
       copyright: 'Copyright © 2023-2024 Inspur server All Rights Reserved.'
@@ -72,4 +103,5 @@ export default defineConfig({
       }, link: 'https://qm.qq.com/q/zTsUtxh876' }
     ]
   }
-})
+}
+)
