@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏反馈与建议收集</title>
+    <style>
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #a29bfe;
+            --accent-color: #fd79a8;
+            --dark-color: #2d3436;
+            --light-color: #f5f6fa;
+            --success-color: #00b894;
+            --danger-color: #d63031;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--dark-color);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--dark-color);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .radio-option input {
+            width: auto;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-reset {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            margin-left: 15px;
+        }
+
+        .btn-reset:hover {
+            background-color: #e0e0e0;
+        }
+
+        .required::after {
+            content: " *";
+            color: var(--danger-color);
+        }
+
+        .error {
+            color: var(--danger-color);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-message {
+            background-color: var(--success-color);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 20px;
+            }
+
+            .radio-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .btn-reset {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>游戏反馈与建议收集</h1>
+            <p class="subtitle">感谢您帮助我们改进游戏体验！请详细描述您遇到的问题或提出宝贵建议。</p>
+        </header>
+
+        <div class="card">
+            <form id="feedbackForm">
+                <div class="form-group">
+                    <label for="playerName" class="required">玩家名称</label>
+                    <input type="text" id="playerName" name="playerName" placeholder="请输入您的游戏昵称" required>
+                    <div class="error" id="nameError">请输入玩家名称</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="playerEmail">联系方式（邮箱）</label>
+                    <input type="email" id="playerEmail" name="playerEmail" placeholder="请输入您的邮箱（选填）">
+                    <div class="error" id="emailError">请输入有效的邮箱地址</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="feedbackType" class="required">反馈类型</label>
+                    <select id="feedbackType" name="feedbackType" required>
+                        <option value="">请选择反馈类型</option>
+                        <option value="bug">游戏BUG</option>
+                        <option value="suggestion">改进建议</option>
+                        <option value="balance">游戏平衡性</option>
+                        <option value="ui">界面/用户体验</option>
+                        <option value="performance">性能问题</option>
+                        <option value="other">其他</option>
+                    </select>
+                    <div class="error" id="typeError">请选择反馈类型</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="gameVersion">游戏版本</label>
+                    <input type="text" id="gameVersion" name="gameVersion" placeholder="例如：v1.2.3（选填）">
+                </div>
+
+                <div class="form-group">
+                    <label for="deviceInfo">设备信息</label>
+                    <input type="text" id="deviceInfo" name="deviceInfo" placeholder="例如：Windows 10 / iPhone 12（选填）">
+                </div>
+
+                <div class="form-group">
+                    <label for="feedbackContent" class="required">反馈内容</label>
+                    <textarea id="feedbackContent" name="feedbackContent" placeholder="请详细描述您遇到的问题或建议..."
+                        required></textarea>
+                    <div class="error" id="contentError">请输入反馈内容</div>
+                </div>
+
+                <div class="form-group">
+                    <label>严重程度</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="severityLow" name="severity" value="low">
+                            <label for="severityLow">低</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="severityMedium" name="severity" value="medium" checked>
+                            <label for="severityMedium">中</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="severityHigh" name="severity" value="high">
+                            <label for="severityHigh">高</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="severityCritical" name="severity" value="critical">
+                            <label for="severityCritical">严重</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="attachments">附件上传</label>
+                    <input type="file" id="attachments" name="attachments" multiple>
+                    <small style="color: #777;">支持图片、视频或日志文件（最多5个，每个不超过10MB）</small>
+                </div>
+
+                <button type="submit" class="btn">
+                    <span>提交反馈</span>
+                </button>
+                <button type="reset" class="btn btn-reset">重置表单</button>
+
+                <div class="success-message" id="successMessage">
+                    感谢您的反馈！我们已经收到您的提交。
+                </div>
+            </form>
+        </div>
+
+        <footer>
+            <p>© 2023 游戏名称 - 玩家反馈系统 | 我们重视每一位玩家的意见</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('feedbackForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // 重置错误消息
+            document.querySelectorAll('.error').forEach(error => {
+                error.style.display = 'none';
+            });
+
+            let isValid = true;
+
+            // 验证玩家名称
+            const playerName = document.getElementById('playerName').value.trim();
+            if (!playerName) {
+                document.getElementById('nameError').style.display = 'block';
+                isValid = false;
+            }
+
+            // 验证邮箱（如果填写了）
+            const playerEmail = document.getElementById('playerEmail').value.trim();
+            if (playerEmail && !validateEmail(playerEmail)) {
+                document.getElementById('emailError').style.display = 'block';
+                isValid = false;
+            }
+
+            // 验证反馈类型
+            const feedbackType = document.getElementById('feedbackType').value;
+            if (!feedbackType) {
+                document.getElementById('typeError').style.display = 'block';
+                isValid = false;
+            }
+
+            // 验证反馈内容
+            const feedbackContent = document.getElementById('feedbackContent').value.trim();
+            if (!feedbackContent) {
+                document.getElementById('contentError').style.display = 'block';
+                isValid = false;
+            }
+
+            if (isValid) {
+                // 模拟提交到服务器
+                submitFeedback({
+                    playerName,
+                    playerEmail,
+                    feedbackType,
+                    gameVersion: document.getElementById('gameVersion').value,
+                    deviceInfo: document.getElementById('deviceInfo').value,
+                    feedbackContent,
+                    severity: document.querySelector('input[name="severity"]:checked').value,
+                    attachments: document.getElementById('attachments').files
+                });
+            }
+        });
+
+        function validateEmail(email) {
+            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        // 模拟提交到服务器的函数
+        function submitFeedback(data) {
+            // 在实际应用中，这里应该将数据发送到真实的服务器
+            console.log('提交的数据:', data);
+
+            // 显示加载状态
+            const submitBtn = document.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span>提交中...</span>';
+            submitBtn.disabled = true;
+
+            // 模拟网络延迟
+            setTimeout(() => {
+                // 显示成功消息
+                document.getElementById('successMessage').style.display = 'block';
+
+                // 恢复按钮状态
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+
+                // 3秒后重置表单
+                setTimeout(() => {
+                    document.getElementById('feedbackForm').reset();
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 3000);
+            }, 1500);
+        }
+    </script>
+</body>
+
+</html>

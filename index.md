@@ -13,8 +13,8 @@ hero:
       text: 服务器介绍
       link: /README.md
     - theme: alt
-      text: 卫星地图
-      link: http://map.inspurs.work:22222/
+      text: 建议反馈
+      link: /FK.html
     - theme: alt
       text: 更新日志
       link: /UPDATE.md
