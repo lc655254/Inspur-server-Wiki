@@ -120,8 +120,14 @@ export default {
     }
   },
   mounted() {
-    this.loadFeedbacks();
-  },
+  const password = prompt('请输入管理员密码:');
+  if (password !== '655254') {
+    alert('密码错误！');
+    this.$router.push('/');
+    return;
+  }
+  this.loadFeedbacks();
+},
   methods: {
     loadFeedbacks() {
       const stored = localStorage.getItem('playerFeedbacks');
@@ -468,7 +474,7 @@ h1 {
   }
   
   .filter-group {
-    width: 100%;
+    width: 100%; 
   }
   
   .filter-group select {
