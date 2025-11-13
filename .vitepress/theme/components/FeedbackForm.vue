@@ -82,13 +82,9 @@
 </template>
 
 <script>
-// 引入Supabase客户端
-import { createClient } from '@supabase/supabase-js'
-
-// 初始化Supabase客户端，使用你提供的凭证
+// 使用 CDN 方式引入 Supabase
 const supabaseUrl = 'https://wamzxvpctmihuovhulhf.supabase.co'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhbXp4dnBjdG1paHVvdmh1bGhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwMDQ0MzQsImV4cCI6MjA3ODU4MDQzNH0.sewGA3tnyrSjBrxE8_oHTDWRB_oNApFhGtLvLPhG5_A'
-const supabase = createClient(supabaseUrl, supabaseKey)
 
 export default {
   name: 'FeedbackForm',
@@ -112,10 +108,33 @@ export default {
         { value: 'medium', label: '中', emoji: '🟡' },
         { value: 'high', label: '高', emoji: '🟠' },
         { value: 'critical', label: '严重', emoji: '🔴' }
-      ]
+      ],
+      supabase: null
     }
   },
+  mounted() {
+    // 动态加载 Supabase
+    this.loadSupabase()
+  },
   methods: {
+    async loadSupabase() {
+      if (typeof window !== 'undefined') {
+        // 检查是否已经加载了 Supabase
+        if (window.supabase) {
+          this.supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
+          return
+        }
+        
+        // 动态加载 Supabase CDN
+        const script = document.createElement('script')
+        script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'
+        script.onload = () => {
+          this.supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
+        }
+        document.head.appendChild(script)
+      }
+    },
+    
     validateForm() {
       this.errors = {}
       
@@ -152,11 +171,16 @@ export default {
         return
       }
       
+      if (!this.supabase) {
+        alert('系统正在初始化，请稍后重试')
+        return
+      }
+      
       this.submitting = true
       
       try {
-        // 提交到 Supabase 数据库[citation:1]
-        const { data, error } = await supabase
+        // 提交到 Supabase 数据库
+        const { data, error } = await this.supabase
           .from('feedbacks')
           .insert([
             {

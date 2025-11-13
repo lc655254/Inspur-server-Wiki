@@ -166,13 +166,9 @@
 </template>
 
 <script>
-// 引入Supabase客户端
-import { createClient } from '@supabase/supabase-js'
-
-// 初始化Supabase客户端，使用你提供的凭证
+// 使用 CDN 方式引入 Supabase
 const supabaseUrl = 'https://wamzxvpctmihuovhulhf.supabase.co'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhbXp4dnBjdG1paHVvdmh1bGhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwMDQ0MzQsImV4cCI6MjA3ODU4MDQzNH0.sewGA3tnyrSjBrxE8_oHTDWRB_oNApFhGtLvLPhG5_A'
-const supabase = createClient(supabaseUrl, supabaseKey)
 
 export default {
   name: 'FeedbackAdmin',
@@ -185,6 +181,7 @@ export default {
       refreshInterval: 30,
       lastRefreshTime: '刚刚',
       refreshTimer: null,
+      supabase: null,
       
       // 筛选条件
       currentFilter: 'all',
@@ -221,9 +218,9 @@ export default {
     }
   },
   mounted() {
+    this.loadSupabase()
     this.checkAuthStatus();
     if (this.isAuthenticated) {
-      this.loadFeedbacks();
       this.startAutoRefresh();
     }
   },
@@ -246,6 +243,30 @@ export default {
     }
   },
   methods: {
+    async loadSupabase() {
+      if (typeof window !== 'undefined') {
+        // 检查是否已经加载了 Supabase
+        if (window.supabase) {
+          this.supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
+          if (this.isAuthenticated) {
+            this.loadFeedbacks()
+          }
+          return
+        }
+        
+        // 动态加载 Supabase CDN
+        const script = document.createElement('script')
+        script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'
+        script.onload = () => {
+          this.supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
+          if (this.isAuthenticated) {
+            this.loadFeedbacks()
+          }
+        }
+        document.head.appendChild(script)
+      }
+    },
+    
     checkAuthStatus() {
       const auth = localStorage.getItem('feedbackAdminAuth');
       if (auth && auth === '655254') {
@@ -257,7 +278,9 @@ export default {
       if (this.password === '655254') {
         this.isAuthenticated = true;
         localStorage.setItem('feedbackAdminAuth', '655254');
-        this.loadFeedbacks();
+        if (this.supabase) {
+          this.loadFeedbacks();
+        }
         this.startAutoRefresh();
       } else {
         alert('密码错误！');
@@ -271,9 +294,14 @@ export default {
     },
     
     async loadFeedbacks() {
+      if (!this.supabase) {
+        console.log('Supabase 尚未加载完成')
+        return
+      }
+      
       try {
-        // 从 Supabase 数据库读取反馈数据[citation:1]
-        const { data, error } = await supabase
+        // 从 Supabase 数据库读取反馈数据
+        const { data, error } = await this.supabase
           .from('feedbacks')
           .select('*')
           .order('created_at', { ascending: false })
@@ -349,9 +377,14 @@ export default {
     },
     
     async closeFeedback(id) {
+      if (!this.supabase) {
+        alert('系统正在初始化，请稍后重试')
+        return
+      }
+      
       try {
-        // 更新数据库中的反馈状态[citation:1]
-        const { error } = await supabase
+        // 更新数据库中的反馈状态
+        const { error } = await this.supabase
           .from('feedbacks')
           .update({ status: 'closed' })
           .eq('id', id)
@@ -370,8 +403,13 @@ export default {
     },
     
     async reopenFeedback(id) {
+      if (!this.supabase) {
+        alert('系统正在初始化，请稍后重试')
+        return
+      }
+      
       try {
-        const { error } = await supabase
+        const { error } = await this.supabase
           .from('feedbacks')
           .update({ status: 'open' })
           .eq('id', id)
@@ -427,6 +465,446 @@ export default {
 </script>
 
 <style scoped>
-/* 这里的CSS样式与之前提供的FeedbackAdmin.vue样式相同 */
-/* 由于篇幅限制，此处省略，请直接使用前面提供的完整CSS样式 */
+.feedback-admin {
+  min-height: 100vh;
+  background-color: #f6f8fa;
+}
+
+.login-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.login-container {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 400px;
+}
+
+.login-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #6c5ce7;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.admin-header {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+h1 {
+  color: #6c5ce7;
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 1rem;
+}
+
+.auto-refresh-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.refresh-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.refresh-interval {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.last-refresh {
+  font-size: 0.9rem;
+  color: #666;
+  margin-left: 10px;
+}
+
+.btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-primary {
+  background-color: #6c5ce7;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #5b4bd4;
+}
+
+.btn-success {
+  background-color: #00b894;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #00a085;
+}
+
+.btn-secondary {
+  background-color: #636e72;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #2d3436;
+}
+
+.btn-danger {
+  background-color: #d63031;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #c23636;
+}
+
+.btn-export {
+  background-color: #0984e3;
+  color: white;
+}
+
+.btn-export:hover {
+  background-color: #0770c4;
+}
+
+.btn-logout {
+  background-color: #fd79a8;
+  color: white;
+}
+
+.btn-logout:hover {
+  background-color: #e84393;
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.stat-card {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card.active {
+  border-color: #6c5ce7;
+  background-color: #f0f3ff;
+}
+
+.stat-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 5px;
+  color: #6c5ce7;
+}
+
+.stat-card p {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.feedback-list-container {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #e1e4e8;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.filters {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-group label {
+  margin-bottom: 0;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.filter-group select {
+  width: auto;
+  min-width: 120px;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.feedback-list {
+  padding: 0;
+}
+
+.feedback-item {
+  padding: 20px;
+  border-bottom: 1px solid #e1e4e8;
+  transition: background-color 0.3s;
+}
+
+.feedback-item:hover {
+  background-color: #f6f8fa;
+}
+
+.feedback-item.status-closed {
+  opacity: 0.7;
+  background-color: #f8f9fa;
+}
+
+.feedback-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.feedback-title {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #24292e;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.status-indicator.open {
+  background-color: #28a745;
+}
+
+.status-indicator.closed {
+  background-color: #6c757d;
+}
+
+.feedback-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.feedback-type {
+  background-color: #e1e4e8;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  color: #586069;
+}
+
+.severity-badge {
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  color: white;
+  font-weight: bold;
+}
+
+.severity-badge.severity-critical {
+  background-color: #d63031;
+}
+
+.severity-badge.severity-high {
+  background-color: #e17055;
+}
+
+.severity-badge.severity-medium {
+  background-color: #fdcb6e;
+  color: #2d3436;
+}
+
+.severity-badge.severity-low {
+  background-color: #00b894;
+}
+
+.feedback-content {
+  margin-bottom: 15px;
+  line-height: 1.5;
+  color: #24292e;
+}
+
+.feedback-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.feedback-author {
+  display: flex;
+  gap: 15px;
+  font-size: 0.9rem;
+  color: #586069;
+}
+
+.player-name {
+  font-weight: 600;
+}
+
+.timestamp {
+  color: #6a737d;
+}
+
+.feedback-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.feedback-details {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #eaecef;
+  font-size: 0.9rem;
+  color: #586069;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #6a737d;
+}
+
+.empty-state p {
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .admin-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .list-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .filters {
+    width: 100%;
+  }
+  
+  .filter-group {
+    flex: 1;
+    min-width: 120px;
+  }
+  
+  .filter-group select {
+    width: 100%;
+  }
+  
+  .actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .feedback-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .feedback-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .feedback-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
 </style>
