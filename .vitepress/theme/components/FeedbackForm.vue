@@ -82,6 +82,14 @@
 </template>
 
 <script>
+// 引入Supabase客户端
+import { createClient } from '@supabase/supabase-js'
+
+// 初始化Supabase客户端，使用你提供的凭证
+const supabaseUrl = 'https://wamzxvpctmihuovhulhf.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhbXp4dnBjdG1paHVvdmh1bGhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwMDQ0MzQsImV4cCI6MjA3ODU4MDQzNH0.sewGA3tnyrSjBrxE8_oHTDWRB_oNApFhGtLvLPhG5_A'
+const supabase = createClient(supabaseUrl, supabaseKey)
+
 export default {
   name: 'FeedbackForm',
   data() {
@@ -147,12 +155,26 @@ export default {
       this.submitting = true
       
       try {
-        // 保存到本地存储
-        this.saveToLocalStorage()
-        
-        // 模拟API调用
-        await new Promise(resolve => setTimeout(resolve, 1500))
-        
+        // 提交到 Supabase 数据库[citation:1]
+        const { data, error } = await supabase
+          .from('feedbacks')
+          .insert([
+            {
+              player_name: this.form.playerName,
+              player_email: this.form.playerEmail,
+              feedback_title: this.form.feedbackTitle,
+              feedback_type: this.form.feedbackType,
+              game_version: this.form.gameVersion,
+              device_info: this.form.deviceInfo,
+              feedback_content: this.form.feedbackContent,
+              severity: this.form.severity,
+              status: 'open'
+            }
+          ])
+          .select()
+
+        if (error) throw error
+
         this.submitSuccess = true
         setTimeout(() => {
           this.resetForm()
@@ -160,22 +182,10 @@ export default {
         }, 3000)
       } catch (error) {
         console.error('提交失败:', error)
+        alert('提交失败，请稍后重试')
       } finally {
         this.submitting = false
       }
-    },
-    
-    saveToLocalStorage() {
-      const feedbacks = JSON.parse(localStorage.getItem('playerFeedbacks') || '[]')
-      const newFeedback = {
-        ...this.form,
-        id: Date.now(),
-        timestamp: new Date().toISOString(),
-        status: 'open', // 默认状态为开放
-        comments: []
-      }
-      feedbacks.push(newFeedback)
-      localStorage.setItem('playerFeedbacks', JSON.stringify(feedbacks))
     },
     
     resetForm() {
@@ -196,7 +206,6 @@ export default {
 </script>
 
 <style scoped>
-/* 样式保持不变，与之前相同 */
 .feedback-system {
   padding: 20px 0;
 }
