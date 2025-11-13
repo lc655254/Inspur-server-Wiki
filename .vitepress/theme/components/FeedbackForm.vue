@@ -2,8 +2,8 @@
   <div class="feedback-system">
     <div class="container">
       <header>
-        <h1>游戏反馈与建议收集</h1>
-        <p class="subtitle">感谢您帮助我们改进游戏体验！请详细描述您遇到的问题或提出宝贵建议。</p>
+        <h1>游戏反馈与建议</h1>
+        <p class="subtitle">帮助我们改进游戏体验，您的反馈对我们非常重要！</p>
       </header>
       
       <div class="card">
@@ -21,15 +21,21 @@
           </div>
           
           <div class="form-group">
+            <label for="feedbackTitle" class="required">反馈标题</label>
+            <input type="text" id="feedbackTitle" v-model="form.feedbackTitle" placeholder="简要描述问题或建议" required>
+            <div class="error" v-if="errors.feedbackTitle">请输入反馈标题</div>
+          </div>
+          
+          <div class="form-group">
             <label for="feedbackType" class="required">反馈类型</label>
             <select id="feedbackType" v-model="form.feedbackType" required>
               <option value="">请选择反馈类型</option>
-              <option value="bug">游戏BUG</option>
-              <option value="suggestion">改进建议</option>
-              <option value="balance">游戏平衡性</option>
-              <option value="ui">界面/用户体验</option>
-              <option value="performance">性能问题</option>
-              <option value="other">其他</option>
+              <option value="bug">🐛 BUG报告</option>
+              <option value="suggestion">💡 功能建议</option>
+              <option value="balance">⚖️ 游戏平衡性</option>
+              <option value="ui">🎨 界面/用户体验</option>
+              <option value="performance">🚀 性能问题</option>
+              <option value="other">❓ 其他</option>
             </select>
             <div class="error" v-if="errors.feedbackType">请选择反馈类型</div>
           </div>
@@ -45,7 +51,7 @@
           </div>
           
           <div class="form-group">
-            <label for="feedbackContent" class="required">反馈内容</label>
+            <label for="feedbackContent" class="required">详细描述</label>
             <textarea id="feedbackContent" v-model="form.feedbackContent" placeholder="请详细描述您遇到的问题或建议..." required></textarea>
             <div class="error" v-if="errors.feedbackContent">请输入反馈内容</div>
           </div>
@@ -55,19 +61,19 @@
             <div class="radio-group">
               <div class="radio-option" v-for="option in severityOptions" :key="option.value">
                 <input type="radio" :id="'severity' + option.value" :value="option.value" v-model="form.severity">
-                <label :for="'severity' + option.value">{{ option.label }}</label>
+                <label :for="'severity' + option.value">{{ option.emoji }} {{ option.label }}</label>
               </div>
             </div>
           </div>
           
-          <button type="submit" class="btn" :disabled="submitting">
-            <span v-if="!submitting">提交反馈</span>
-            <span v-else>提交中...</span>
+          <button type="submit" class="btn btn-primary" :disabled="submitting">
+            <span v-if="!submitting">📝 提交反馈</span>
+            <span v-else>⏳ 提交中...</span>
           </button>
-          <button type="button" class="btn btn-reset" @click="resetForm">重置表单</button>
+          <button type="button" class="btn btn-secondary" @click="resetForm">🔄 重置表单</button>
           
           <div class="success-message" v-if="submitSuccess">
-            感谢您的反馈！我们已经收到您的提交。
+            ✅ 感谢您的反馈！我们已经收到您的提交。
           </div>
         </form>
       </div>
@@ -83,6 +89,7 @@ export default {
       form: {
         playerName: '',
         playerEmail: '',
+        feedbackTitle: '',
         feedbackType: '',
         gameVersion: '',
         deviceInfo: '',
@@ -93,10 +100,10 @@ export default {
       submitting: false,
       submitSuccess: false,
       severityOptions: [
-        { value: 'low', label: '低' },
-        { value: 'medium', label: '中' },
-        { value: 'high', label: '高' },
-        { value: 'critical', label: '严重' }
+        { value: 'low', label: '低', emoji: '🔵' },
+        { value: 'medium', label: '中', emoji: '🟡' },
+        { value: 'high', label: '高', emoji: '🟠' },
+        { value: 'critical', label: '严重', emoji: '🔴' }
       ]
     }
   },
@@ -110,6 +117,10 @@ export default {
       
       if (this.form.playerEmail && !this.validateEmail(this.form.playerEmail)) {
         this.errors.playerEmail = true
+      }
+      
+      if (!this.form.feedbackTitle.trim()) {
+        this.errors.feedbackTitle = true
       }
       
       if (!this.form.feedbackType) {
@@ -159,7 +170,9 @@ export default {
       const newFeedback = {
         ...this.form,
         id: Date.now(),
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        status: 'open', // 默认状态为开放
+        comments: []
       }
       feedbacks.push(newFeedback)
       localStorage.setItem('playerFeedbacks', JSON.stringify(feedbacks))
@@ -169,6 +182,7 @@ export default {
       this.form = {
         playerName: '',
         playerEmail: '',
+        feedbackTitle: '',
         feedbackType: '',
         gameVersion: '',
         deviceInfo: '',
@@ -182,6 +196,7 @@ export default {
 </script>
 
 <style scoped>
+/* 样式保持不变，与之前相同 */
 .feedback-system {
   padding: 20px 0;
 }
@@ -266,10 +281,8 @@ textarea {
 }
 
 .btn {
-  background-color: #6c5ce7;
-  color: white;
-  border: none;
   padding: 14px 25px;
+  border: none;
   border-radius: 8px;
   font-size: 16px;
   font-weight: 600;
@@ -281,23 +294,28 @@ textarea {
   gap: 10px;
 }
 
-.btn:hover:not(:disabled) {
+.btn-primary {
+  background-color: #6c5ce7;
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
   background-color: #a29bfe;
 }
 
-.btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.btn-reset {
+.btn-secondary {
   background-color: #f5f6fa;
   color: #2d3436;
   margin-left: 15px;
 }
 
-.btn-reset:hover {
+.btn-secondary:hover {
   background-color: #e0e0e0;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .required::after {
@@ -335,7 +353,7 @@ textarea {
     margin-bottom: 10px;
   }
   
-  .btn-reset {
+  .btn-secondary {
     margin-left: 0;
   }
 }
