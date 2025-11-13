@@ -95,6 +95,7 @@
           
           <div class="actions">
             <button class="btn btn-export" @click="exportToCSV">📊 导出CSV</button>
+            <button class="btn btn-danger" @click="clearAllFeedback" v-if="feedbacks.length > 0">🗑️ 清空所有</button>
           </div>
         </div>
         
@@ -142,6 +143,8 @@
                             @click="reopenFeedback(feedback.id)">
                       🔓 重新打开
                     </button>
+                    <!-- 添加删除按钮 -->
+                    <button class="btn btn-danger btn-sm" @click="deleteFeedback(feedback.id)">🗑️ 删除</button>
                   </div>
                 </div>
                 
@@ -423,6 +426,59 @@ export default {
       } catch (error) {
         console.error('重新打开反馈失败:', error);
         alert('操作失败，请稍后重试');
+      }
+    },
+    
+    // 添加删除单个反馈的方法
+    async deleteFeedback(id) {
+      if (!this.supabase) {
+        alert('系统正在初始化，请稍后重试')
+        return
+      }
+      
+      if (!confirm('确定要删除这条反馈吗？此操作不可恢复！')) {
+        return;
+      }
+      
+      try {
+        const { error } = await this.supabase
+          .from('feedbacks')
+          .delete()
+          .eq('id', id)
+
+        if (error) throw error;
+
+        // 从本地数据中移除
+        this.feedbacks = this.feedbacks.filter(f => f.id !== id);
+      } catch (error) {
+        console.error('删除反馈失败:', error);
+        alert('删除失败，请稍后重试');
+      }
+    },
+    
+    // 清空所有反馈
+    async clearAllFeedback() {
+      if (!this.supabase) {
+        alert('系统正在初始化，请稍后重试')
+        return
+      }
+      
+      if (!confirm('确定要清空所有反馈吗？此操作不可恢复！')) {
+        return;
+      }
+
+      try {
+        const { error } = await this.supabase
+          .from('feedbacks')
+          .delete()
+          .neq('id', 0)
+
+        if (error) throw error;
+
+        this.feedbacks = [];
+      } catch (error) {
+        console.error('清空反馈失败:', error);
+        alert('清空失败，请稍后重试');
       }
     },
     
