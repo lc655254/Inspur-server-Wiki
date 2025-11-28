@@ -5,8 +5,8 @@ import { pagefindPlugin } from 'vitepress-plugin-pagefind'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   head:[['link', { rel: 'icon', href: '/logo.ico' }]],
-  title: "Inspur server",
-  description: "浪潮的MEBE插件生存服务器",
+  title: "Cloudspur server",
+  description: "全新的云潮第二次删档内测火热进行中",
   base: '/',
   vite: {
     plugins: [pagefindPlugin({
@@ -26,7 +26,7 @@ export default defineConfig({
       { text: '主页面', link: '/' },
       { text: '服务器介绍', link: '/README.md' },
      // { text: '空岛服Wiki', link: '/island/README.md' },
-      { text: '生存服插件列表', link: '/plugins/README.md' }
+      { text: '内测服插件列表', link: '/plugins/README.md' }
     ],
 
     sidebar: {
