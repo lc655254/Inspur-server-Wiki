@@ -6,7 +6,7 @@ import { pagefindPlugin } from 'vitepress-plugin-pagefind'
 export default defineConfig({
   head:[['link', { rel: 'icon', href: '/logo.ico' }]],
   title: "Cloudspur server",
-  description: "全新的云潮第二次删档内测火热进行中",
+  description: "浪潮的MEBE插件生存服务器",
   base: '/',
   vite: {
     plugins: [pagefindPlugin({
