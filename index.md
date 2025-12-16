@@ -4,8 +4,8 @@ layout: home
 
 hero:
   name: "Cloudspur - 云潮"
-  text: "浪潮的MCBE插件生存服务器"
-  tagline: ✨LC✨
+  text: "更新更好的MC服务器"
+  tagline: ✨全新的云潮第二次删档内测火热进行中✨
   image:
     src: /logo.png
   actions:
