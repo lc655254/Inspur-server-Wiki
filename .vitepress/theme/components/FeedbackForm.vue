@@ -82,14 +82,13 @@
 </template>
 
 <script>
-// 使用 CDN 方式引入 Supabase
-const supabaseUrl = 'https://wamzxvpctmihuovhulhf.supabase.co'
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhbXp4dnBjdG1paHVvdmh1bGhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwMDQ0MzQsImV4cCI6MjA3ODU4MDQzNH0.sewGA3tnyrSjBrxE8_oHTDWRB_oNApFhGtLvLPhG5_A'
-
 export default {
   name: 'FeedbackForm',
   data() {
     return {
+      // 👇 这是你自己电脑的后端地址（本地运行）
+      baseURL: "http://api.inspurs.work",
+      
       form: {
         playerName: '',
         playerEmail: '',
@@ -108,33 +107,11 @@ export default {
         { value: 'medium', label: '中', emoji: '🟡' },
         { value: 'high', label: '高', emoji: '🟠' },
         { value: 'critical', label: '严重', emoji: '🔴' }
-      ],
-      supabase: null
+      ]
     }
   },
-  mounted() {
-    // 动态加载 Supabase
-    this.loadSupabase()
-  },
+
   methods: {
-    async loadSupabase() {
-      if (typeof window !== 'undefined') {
-        // 检查是否已经加载了 Supabase
-        if (window.supabase) {
-          this.supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
-          return
-        }
-        
-        // 动态加载 Supabase CDN
-        const script = document.createElement('script')
-        script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'
-        script.onload = () => {
-          this.supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
-        }
-        document.head.appendChild(script)
-      }
-    },
-    
     validateForm() {
       this.errors = {}
       
@@ -166,47 +143,47 @@ export default {
       return re.test(String(email).toLowerCase())
     },
     
+    // 👇 提交到你自己的本地后端
     async submitFeedback() {
       if (!this.validateForm()) {
-        return
-      }
-      
-      if (!this.supabase) {
-        alert('系统正在初始化，请稍后重试')
         return
       }
       
       this.submitting = true
       
       try {
-        // 提交到 Supabase 数据库
-        const { data, error } = await this.supabase
-          .from('feedbacks')
-          .insert([
-            {
-              player_name: this.form.playerName,
-              player_email: this.form.playerEmail,
-              feedback_title: this.form.feedbackTitle,
-              feedback_type: this.form.feedbackType,
-              game_version: this.form.gameVersion,
-              device_info: this.form.deviceInfo,
-              feedback_content: this.form.feedbackContent,
-              severity: this.form.severity,
-              status: 'open'
-            }
-          ])
-          .select()
+        const response = await fetch(this.baseURL + "/api/feedback/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            username: this.form.playerName,
+            email: this.form.playerEmail,
+            title: this.form.feedbackTitle,
+            type: this.form.feedbackType,
+            version: this.form.gameVersion,
+            device: this.form.deviceInfo,
+            content: this.form.feedbackContent,
+            severity: this.form.severity
+          })
+        })
 
-        if (error) throw error
+        const result = await response.json()
 
-        this.submitSuccess = true
-        setTimeout(() => {
-          this.resetForm()
-          this.submitSuccess = false
-        }, 3000)
+        if (result.code === 200) {
+          this.submitSuccess = true
+          setTimeout(() => {
+            this.resetForm()
+            this.submitSuccess = false
+          }, 3000)
+        } else {
+          alert("提交失败：" + result.msg)
+        }
+        
       } catch (error) {
-        console.error('提交失败:', error)
-        alert('提交失败，请稍后重试')
+        console.error("提交失败：", error)
+        alert("提交失败，请检查后端是否启动")
       } finally {
         this.submitting = false
       }
