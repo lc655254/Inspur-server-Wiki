@@ -144,10 +144,36 @@ export default {
     },
     
     // 👇 提交到你自己的本地后端
-    async submitFeedback() {
-      if (!this.validateForm()) {
-        return
-      }
+    submitFeedback() {
+  fetch("https://inspur-feedback.onrender.com/api/feedback/submit", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: this.form.username,
+      email: this.form.email,
+      title: this.form.title,
+      type: this.form.type,
+      version: this.form.version,
+      device: this.form.device,
+      content: this.form.content,
+      severity: this.form.severity
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.code === 200) {
+      alert("提交成功！")
+      this.form = {}
+    } else {
+      alert("提交失败：" + data.msg)
+    }
+  })
+  .catch(err => {
+    alert("提交失败，请检查后端是否启动")
+  })
+}
       
       this.submitting = true
       
