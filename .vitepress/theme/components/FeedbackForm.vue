@@ -87,7 +87,7 @@ export default {
   data() {
     return {
       // 👇 这是你自己电脑的后端地址（本地运行）
-      baseURL: "https://api.inspurs.work",
+      baseURL: "https://inspur-feedback.onrender.com",
       
       form: {
         playerName: '',
