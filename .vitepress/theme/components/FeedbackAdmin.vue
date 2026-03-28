@@ -179,7 +179,7 @@ export default {
       refreshInterval: 30,
       lastRefreshTime: '刚刚',
       refreshTimer: null,
-      baseURL: "http://api.inspurs.work",
+      baseURL: "https://api.inspurs.work",
       currentFilter: 'all',
       statusFilter: 'all',
       typeFilter: 'all',
