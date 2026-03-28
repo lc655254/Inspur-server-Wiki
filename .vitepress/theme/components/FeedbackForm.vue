@@ -86,7 +86,6 @@ export default {
   name: 'FeedbackForm',
   data() {
     return {
-      // 👇 这是你自己电脑的后端地址（本地运行）
       baseURL: "https://inspur-feedback.onrender.com",
       
       form: {
@@ -143,37 +142,8 @@ export default {
       return re.test(String(email).toLowerCase())
     },
     
-    // 👇 提交到你自己的本地后端
-    submitFeedback() {
-  fetch("https://inspur-feedback.onrender.com/api/feedback/submit", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      username: this.form.username,
-      email: this.form.email,
-      title: this.form.title,
-      type: this.form.type,
-      version: this.form.version,
-      device: this.form.device,
-      content: this.form.content,
-      severity: this.form.severity
-    })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.code === 200) {
-      alert("提交成功！")
-      this.form = {}
-    } else {
-      alert("提交失败：" + data.msg)
-    }
-  })
-  .catch(err => {
-    alert("提交失败，请检查后端是否启动")
-  })
-}
+    async submitFeedback() {
+      if (!this.validateForm()) return
       
       this.submitting = true
       
@@ -204,12 +174,12 @@ export default {
             this.submitSuccess = false
           }, 3000)
         } else {
-          alert("提交失败：" + result.msg)
+          alert("提交失败：" + (result.msg || "服务器错误"))
         }
         
       } catch (error) {
         console.error("提交失败：", error)
-        alert("提交失败，请检查后端是否启动")
+        alert("提交失败，请检查网络或稍后重试")
       } finally {
         this.submitting = false
       }
