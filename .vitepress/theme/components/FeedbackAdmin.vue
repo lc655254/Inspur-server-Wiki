@@ -179,11 +179,7 @@ export default {
       refreshInterval: 30,
       lastRefreshTime: '刚刚',
       refreshTimer: null,
-      
-      // 👇 你的本地后端地址
       baseURL: "http://api.inspurs.work",
-
-      // 筛选条件
       currentFilter: 'all',
       statusFilter: 'all',
       typeFilter: 'all',
@@ -236,8 +232,6 @@ export default {
       localStorage.removeItem('feedbackAdminAuth');
       this.stopAutoRefresh();
     },
-
-    // 加载反馈
     async loadFeedbacks() {
       try {
         const res = await fetch(this.baseURL + "/api/feedback/list");
@@ -248,8 +242,6 @@ export default {
         console.error("加载失败", e);
       }
     },
-
-    // 状态操作
     async closeFeedback(id) {
       await this.updateFeedback(id, { status: "closed" });
     },
@@ -266,8 +258,6 @@ export default {
         this.loadFeedbacks();
       } catch (e) { alert("操作失败"); }
     },
-
-    // 删除单条
     async deleteFeedback(id) {
       if (!confirm("确定删除？")) return;
       try {
@@ -275,8 +265,6 @@ export default {
         this.loadFeedbacks();
       } catch (e) { alert("删除失败"); }
     },
-
-    // 清空所有
     async clearAllFeedback() {
       if (!confirm("确定清空所有？不可恢复！")) return;
       try {
@@ -284,7 +272,6 @@ export default {
         this.feedbacks = [];
       } catch (e) { alert("清空失败"); }
     },
-
     startAutoRefresh() {
       this.stopAutoRefresh();
       if (this.autoRefresh) {
@@ -318,7 +305,7 @@ export default {
       const headers = ["时间","玩家","邮箱","标题","类型","版本","设备","内容","等级","状态"];
       const rows = this.feedbacks.map(f => [
         this.formatDate(f.created_at), f.player_name, f.player_email||'',
-        f.feedback_title， this。getTypeLabel(f.feedback_type), f.game_version||'',
+        f.feedback_title, this.getTypeLabel(f.feedback_type), f.game_version||'',
         f.device_info||'', `"${(f.feedback_content||'').replace(/"/g, '""')}"`,
         this.getSeverityLabel(f.severity), f.status==="open"?"待处理":"已解决"
       ]);
@@ -539,7 +526,7 @@ h1 {
   background: white;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 1);
 }
 
 .list-header {
