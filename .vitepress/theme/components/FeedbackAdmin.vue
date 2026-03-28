@@ -143,7 +143,6 @@
                             @click="reopenFeedback(feedback.id)">
                       🔓 重新打开
                     </button>
-                    <!-- 添加删除按钮 -->
                     <button class="btn btn-danger btn-sm" @click="deleteFeedback(feedback.id)">🗑️ 删除</button>
                   </div>
                 </div>
@@ -169,10 +168,6 @@
 </template>
 
 <script>
-// 使用 CDN 方式引入 Supabase
-const supabaseUrl = 'https://wamzxvpctmihuovhulhf.supabase.co'
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhbXp4dnBjdG1paHVvdmh1bGhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwMDQ0MzQsImV4cCI6MjA3ODU4MDQzNH0.sewGA3tnyrSjBrxE8_oHTDWRB_oNApFhGtLvLPhG5_A'
-
 export default {
   name: 'FeedbackAdmin',
   data() {
@@ -184,8 +179,10 @@ export default {
       refreshInterval: 30,
       lastRefreshTime: '刚刚',
       refreshTimer: null,
-      supabase: null,
       
+      // 👇 你的本地后端地址
+      baseURL: "http://127.0.0.1:5000",
+
       // 筛选条件
       currentFilter: 'all',
       statusFilter: 'all',
@@ -199,322 +196,138 @@ export default {
         const statusMatch = this.statusFilter === 'all' || feedback.status === this.statusFilter;
         const typeMatch = this.typeFilter === 'all' || feedback.feedback_type === this.typeFilter;
         const severityMatch = this.severityFilter === 'all' || feedback.severity === this.severityFilter;
-        
         return statusMatch && typeMatch && severityMatch;
       }).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     },
-    
-    totalCount() {
-      return this.feedbacks.length;
-    },
-    
-    openCount() {
-      return this.feedbacks.filter(f => f.status === 'open').length;
-    },
-    
-    closedCount() {
-      return this.feedbacks.filter(f => f.status === 'closed').length;
-    },
-    
-    bugCount() {
-      return this.feedbacks.filter(f => f.feedback_type === 'bug').length;
-    }
+    totalCount() { return this.feedbacks.length; },
+    openCount() { return this.feedbacks.filter(f => f.status === 'open').length; },
+    closedCount() { return this.feedbacks.filter(f => f.status === 'closed').length; },
+    bugCount() { return this.feedbacks.filter(f => f.feedback_type === 'bug').length; }
   },
   mounted() {
-    this.loadSupabase()
     this.checkAuthStatus();
     if (this.isAuthenticated) {
+      this.loadFeedbacks();
       this.startAutoRefresh();
     }
   },
-  beforeUnmount() {
-    this.stopAutoRefresh();
-  },
+  beforeUnmount() { this.stopAutoRefresh(); },
   watch: {
-    autoRefresh(newVal) {
-      if (newVal) {
-        this.startAutoRefresh();
-      } else {
-        this.stopAutoRefresh();
-      }
-    },
-    refreshInterval() {
-      this.stopAutoRefresh();
-      if (this.autoRefresh) {
-        this.startAutoRefresh();
-      }
-    }
+    autoRefresh(newVal) { newVal ? this.startAutoRefresh() : this.stopAutoRefresh(); },
+    refreshInterval() { this.stopAutoRefresh(); if (this.autoRefresh) this.startAutoRefresh(); }
   },
   methods: {
-    async loadSupabase() {
-      if (typeof window !== 'undefined') {
-        // 检查是否已经加载了 Supabase
-        if (window.supabase) {
-          this.supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
-          if (this.isAuthenticated) {
-            this.loadFeedbacks()
-          }
-          return
-        }
-        
-        // 动态加载 Supabase CDN
-        const script = document.createElement('script')
-        script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'
-        script.onload = () => {
-          this.supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
-          if (this.isAuthenticated) {
-            this.loadFeedbacks()
-          }
-        }
-        document.head.appendChild(script)
-      }
-    },
-    
     checkAuthStatus() {
       const auth = localStorage.getItem('feedbackAdminAuth');
-      if (auth && auth === '655254') {
-        this.isAuthenticated = true;
-      }
+      this.isAuthenticated = auth === '655254';
     },
-    
     checkPassword() {
       if (this.password === '655254') {
         this.isAuthenticated = true;
         localStorage.setItem('feedbackAdminAuth', '655254');
-        if (this.supabase) {
-          this.loadFeedbacks();
-        }
+        this.loadFeedbacks();
         this.startAutoRefresh();
       } else {
         alert('密码错误！');
       }
     },
-    
     logout() {
       this.isAuthenticated = false;
       localStorage.removeItem('feedbackAdminAuth');
       this.stopAutoRefresh();
     },
-    
+
+    // 加载反馈
     async loadFeedbacks() {
-      if (!this.supabase) {
-        console.log('Supabase 尚未加载完成')
-        return
-      }
-      
       try {
-        // 从 Supabase 数据库读取反馈数据
-        const { data, error } = await this.supabase
-          .from('feedbacks')
-          .select('*')
-          .order('created_at', { ascending: false })
-
-        if (error) throw error;
-
-        this.feedbacks = data || [];
+        const res = await fetch(this.baseURL + "/api/feedback/list");
+        const result = await res.json();
+        this.feedbacks = result.data || [];
         this.lastRefreshTime = new Date().toLocaleTimeString();
-      } catch (error) {
-        console.error('加载反馈失败:', error);
+      } catch (e) {
+        console.error("加载失败", e);
       }
     },
-    
+
+    // 状态操作
+    async closeFeedback(id) {
+      await this.updateFeedback(id, { status: "closed" });
+    },
+    async reopenFeedback(id) {
+      await this.updateFeedback(id, { status: "open" });
+    },
+    async updateFeedback(id, data) {
+      try {
+        await fetch(this.baseURL + `/api/feedback/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+        this.loadFeedbacks();
+      } catch (e) { alert("操作失败"); }
+    },
+
+    // 删除单条
+    async deleteFeedback(id) {
+      if (!confirm("确定删除？")) return;
+      try {
+        await fetch(this.baseURL + `/api/feedback/${id}`, { method: "DELETE" });
+        this.loadFeedbacks();
+      } catch (e) { alert("删除失败"); }
+    },
+
+    // 清空所有
+    async clearAllFeedback() {
+      if (!confirm("确定清空所有？不可恢复！")) return;
+      try {
+        await fetch(this.baseURL + "/api/feedback/clear", { method: "DELETE" });
+        this.feedbacks = [];
+      } catch (e) { alert("清空失败"); }
+    },
+
     startAutoRefresh() {
       this.stopAutoRefresh();
       if (this.autoRefresh) {
-        this.refreshTimer = setInterval(() => {
-          this.loadFeedbacks();
-        }, this.refreshInterval * 1000);
+        this.refreshTimer = setInterval(() => this.loadFeedbacks(), this.refreshInterval * 1000);
       }
     },
-    
     stopAutoRefresh() {
-      if (this.refreshTimer) {
-        clearInterval(this.refreshTimer);
-        this.refreshTimer = null;
-      }
+      clearInterval(this.refreshTimer);
     },
-    
     setFilter(filter) {
       this.currentFilter = filter;
-      switch(filter) {
-        case 'open':
-          this.statusFilter = 'open';
-          break;
-        case 'closed':
-          this.statusFilter = 'closed';
-          break;
-        case 'bug':
-          this.typeFilter = 'bug';
-          break;
-        default:
-          this.statusFilter = 'all';
-          this.typeFilter = 'all';
-      }
+      if (filter === "open") this.statusFilter = "open";
+      else if (filter === "closed") this.statusFilter = "closed";
+      else if (filter === "bug") this.typeFilter = "bug";
+      else { this.statusFilter = "all"; this.typeFilter = "all"; }
     },
-    
     getTypeLabel(type) {
-      const typeMap = {
-        'bug': '🐛 BUG报告',
-        'suggestion': '💡 功能建议',
-        'balance': '⚖️ 游戏平衡性',
-        'ui': '🎨 界面/用户体验',
-        'performance': '🚀 性能问题',
-        'other': '❓ 其他'
-      };
-      return typeMap[type] || type;
+      const map = { bug:'🐛 BUG报告', suggestion:'💡 功能建议', balance:'⚖️ 游戏平衡性', ui:'🎨 界面/用户体验', performance:'🚀 性能问题', other:'❓ 其他' };
+      return map[type] || type;
     },
-    
-    getSeverityLabel(severity) {
-      const severityMap = {
-        'low': '🔵 低',
-        'medium': '🟡 中',
-        'high': '🟠 高',
-        'critical': '🔴 严重'
-      };
-      return severityMap[severity] || severity;
+    getSeverityLabel(s) {
+      const m = { low:'🔵 低', medium:'🟡 中', high:'🟠 高', critical:'🔴 严重' };
+      return m[s] || s;
     },
-    
-    formatDate(timestamp) {
-      const date = new Date(timestamp);
-      return `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+    formatDate(t) {
+      const d = new Date(t);
+      return `${d.getFullYear()}-${(d.getMonth()+1+'').padStart(2,0)}-${(d.getDate()+'').padStart(2,0)} ${(d.getHours()+'').padStart(2,0)}:${(d.getMinutes()+'').padStart(2,0)}`;
     },
-    
-    async closeFeedback(id) {
-      if (!this.supabase) {
-        alert('系统正在初始化，请稍后重试')
-        return
-      }
-      
-      try {
-        // 更新数据库中的反馈状态
-        const { error } = await this.supabase
-          .from('feedbacks')
-          .update({ status: 'closed' })
-          .eq('id', id)
-
-        if (error) throw error;
-
-        // 更新本地数据
-        const feedback = this.feedbacks.find(f => f.id === id);
-        if (feedback) {
-          feedback.status = 'closed';
-        }
-      } catch (error) {
-        console.error('关闭反馈失败:', error);
-        alert('操作失败，请稍后重试');
-      }
-    },
-    
-    async reopenFeedback(id) {
-      if (!this.supabase) {
-        alert('系统正在初始化，请稍后重试')
-        return
-      }
-      
-      try {
-        const { error } = await this.supabase
-          .from('feedbacks')
-          .update({ status: 'open' })
-          .eq('id', id)
-
-        if (error) throw error;
-
-        const feedback = this.feedbacks.find(f => f.id === id);
-        if (feedback) {
-          feedback.status = 'open';
-        }
-      } catch (error) {
-        console.error('重新打开反馈失败:', error);
-        alert('操作失败，请稍后重试');
-      }
-    },
-    
-    // 添加删除单个反馈的方法
-    async deleteFeedback(id) {
-      if (!this.supabase) {
-        alert('系统正在初始化，请稍后重试')
-        return
-      }
-      
-      if (!confirm('确定要删除这条反馈吗？此操作不可恢复！')) {
-        return;
-      }
-      
-      try {
-        const { error } = await this.supabase
-          .from('feedbacks')
-          .delete()
-          .eq('id', id)
-
-        if (error) throw error;
-
-        // 从本地数据中移除
-        this.feedbacks = this.feedbacks.filter(f => f.id !== id);
-      } catch (error) {
-        console.error('删除反馈失败:', error);
-        alert('删除失败，请稍后重试');
-      }
-    },
-    
-    // 清空所有反馈
-    async clearAllFeedback() {
-      if (!this.supabase) {
-        alert('系统正在初始化，请稍后重试')
-        return
-      }
-      
-      if (!confirm('确定要清空所有反馈吗？此操作不可恢复！')) {
-        return;
-      }
-
-      try {
-        const { error } = await this.supabase
-          .from('feedbacks')
-          .delete()
-          .neq('id', 0)
-
-        if (error) throw error;
-
-        this.feedbacks = [];
-      } catch (error) {
-        console.error('清空反馈失败:', error);
-        alert('清空失败，请稍后重试');
-      }
-    },
-    
     exportToCSV() {
-      if (this.feedbacks.length === 0) {
-        alert('没有数据可导出');
-        return;
-      }
-      
-      const headers = ['时间', '玩家名称', '邮箱', '反馈标题', '反馈类型', '游戏版本', '设备信息', '反馈内容', '严重程度', '状态'];
-      const csvData = this.feedbacks.map(feedback => [
-        this.formatDate(feedback.created_at),
-        feedback.player_name,
-        feedback.player_email || '',
-        feedback.feedback_title,
-        this.getTypeLabel(feedback.feedback_type),
-        feedback.game_version || '',
-        feedback.device_info || '',
-        `"${feedback.feedback_content.replace(/"/g, '""')}"`,
-        this.getSeverityLabel(feedback.severity),
-        feedback.status === 'open' ? '待处理' : '已解决'
+      if (!this.feedbacks.length) return alert("无数据");
+      const headers = ["时间","玩家","邮箱","标题","类型","版本","设备","内容","等级","状态"];
+      const rows = this.feedbacks.map(f => [
+        this.formatDate(f.created_at), f.player_name, f.player_email||'',
+        f.feedback_title, this.getTypeLabel(f.feedback_type), f.game_version||'',
+        f.device_info||'', `"${(f.feedback_content||'').replace(/"/g, '""')}"`,
+        this.getSeverityLabel(f.severity), f.status==="open"?"待处理":"已解决"
       ]);
-      
-      const csvContent = [headers, ...csvData]
-        .map(row => row.join(','))
-        .join('\n');
-      
-      const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-      const url = URL.createObjectURL(blob);
-      link.setAttribute('href', url);
-      link.setAttribute('download', `玩家反馈_${new Date().toISOString().split('T')[0]}.csv`);
-      link.style.visibility = 'hidden';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      const csv = "\uFEFF" + [headers,...rows].map(i=>i.join(',')).join('\n');
+      const blob = new Blob([csv], { type:"text/csv;charset=utf-8" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `玩家反馈_${new Date().toISOString().split('T')[0]}.csv`;
+      a.click();
     }
   }
 }
