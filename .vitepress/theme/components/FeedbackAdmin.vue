@@ -179,7 +179,7 @@ export default {
       refreshInterval: 30,
       lastRefreshTime: '刚刚',
       refreshTimer: null,
-      baseURL: "https://api.inspurs.work",
+      baseURL: "https://inspur-feedback.onrender.com",
       currentFilter: 'all',
       statusFilter: 'all',
       typeFilter: 'all',
@@ -288,7 +288,7 @@ export default {
       else if (filter === "bug") this.typeFilter = "bug";
       else { this.statusFilter = "all"; this.typeFilter = "all"; }
     },
-    getTypeLabel(type) {
+    getTypeLabel(输入) {
       const map = { bug:'🐛 BUG报告', suggestion:'💡 功能建议', balance:'⚖️ 游戏平衡性', ui:'🎨 界面/用户体验', performance:'🚀 性能问题', other:'❓ 其他' };
       return map[type] || type;
     },
