@@ -181,7 +181,7 @@ export default {
       refreshTimer: null,
       
       // 👇 你的本地后端地址
-      baseURL: "http://127.0.0.1:5000",
+      baseURL: "http://api.inspurs.work",
 
       // 筛选条件
       currentFilter: 'all',
@@ -318,7 +318,7 @@ export default {
       const headers = ["时间","玩家","邮箱","标题","类型","版本","设备","内容","等级","状态"];
       const rows = this.feedbacks.map(f => [
         this.formatDate(f.created_at), f.player_name, f.player_email||'',
-        f.feedback_title, this.getTypeLabel(f.feedback_type), f.game_version||'',
+        f.feedback_title， this。getTypeLabel(f.feedback_type), f.game_version||'',
         f.device_info||'', `"${(f.feedback_content||'').replace(/"/g, '""')}"`,
         this.getSeverityLabel(f.severity), f.status==="open"?"待处理":"已解决"
       ]);
