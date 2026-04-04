@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: "Cloudspur - 云潮"
+  name: "Inspurs"
   text: "更新更好的MC服务器"
   tagline: ✨全新的云潮第二次删档内测火热进行中✨
   image:
@@ -39,7 +39,7 @@ features:
 
 ## 如何游玩
 
-```点我可以复制哦~
+```
 请敬请期待 cloudspur - 云潮 ~
 ```
 

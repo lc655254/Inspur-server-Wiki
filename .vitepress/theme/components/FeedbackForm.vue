@@ -86,7 +86,7 @@ export default {
   name: 'FeedbackForm',
   data() {
     return {
-      baseURL: "https://inspur-feedback.onrender.com",
+      baseURL: "http://api.inspurs.work",
       
       form: {
         playerName: '',
