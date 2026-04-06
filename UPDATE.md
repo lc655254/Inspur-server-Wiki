@@ -15,6 +15,7 @@ const releaseData = [
       { type: 'fix', text: '修复一些可能出现的崩服BUG' },
       { type: 'fix', text: '修复FC灵魂出窍无法正常使用' },
       { type: 'fix', text: '修复任务完成之后末地无法正常前往' },
+      { type: 'feature', text: '新增配方<br/><img src="/pf.png" style="max-width:100%; margin-top:8px;" />' }
     ]
   },
   {

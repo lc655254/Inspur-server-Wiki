@@ -5,7 +5,7 @@ import { pagefindPlugin } from 'vitepress-plugin-pagefind'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   head:[['link', { rel: 'icon', href: '/logo.ico' }]],
-  title: "Cloudspur server",
+  title: "Inspurs",
   description: "浪潮的MEBE插件生存服务器",
   base: '/',
   vite: {
@@ -19,6 +19,9 @@ export default defineConfig({
       toClose: '关闭',
       // searchBy: '',
     })],
+    server: {
+      allowedHosts: ['www.inspurs.work', 'inspurs.work']
+    }
   },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
@@ -94,7 +97,7 @@ export default defineConfig({
     },
     footer: {
       message: '此服务器与 Mojang Studio、网易、Microsoft 没有从属关系。',
-      copyright: 'Copyright © 2023-2024 Inspur server All Rights Reserved.'
+      copyright: 'Copyright © 2023-2026 Inspur server All Rights Reserved.'
     },
     socialLinks: [
       {
