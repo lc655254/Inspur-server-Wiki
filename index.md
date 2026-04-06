@@ -103,13 +103,13 @@ const mySponsors = [
   },
   {
     name: '猫猫',
-    avatar: '/public/tx.jpg',
+    avatar: 'https://s41.ax1x.com/2026/04/06/peN7htg.jpg',
     message: '猫猫老糖了',
     link: 'https://api.mmp.cc/api/qqhome?text=1585783905'
   },
   {
     name: '如梭',
-    avatar: '/public/tx2.jpg',
+    avatar: 'https://s41.ax1x.com/2026/04/06/peN74hQ.jpg',
     message: '你随便',
     link: 'https://api.mmp.cc/api/qqhome?text=3367094820'
   }
