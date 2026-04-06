@@ -5,9 +5,9 @@ layout: home
 hero:
   name: "Inspurs"
   text: "更新更好的MC服务器"
-  tagline: ✨全新的云潮第二次删档内测火热进行中✨
+  tagline: ✨全新的服务器火热运营中✨
   image:
-    src: /logo.png
+    src: /logo0.png
   actions:
     - theme: brand
       text: 服务器介绍
@@ -19,12 +19,12 @@ hero:
       text: 更新日志
       link: /UPDATE.md
     - theme: alt
-      text: 想玩的快来点我加入群聊！
+      text: 点我加入群聊
       link: https://qm.qq.com/q/46c2WQlMG4
 
 features:
   - title: 机制丰富优良
-    details: 多样化的各种机制等待你的开发挖掘(注:这些特点介绍是可以点的)
+    details: 多样化的各种机制等待你的开发挖掘
     link: https://www.bing.com/search?q=MC%E6%9C%BA%E5%88%B6%E5%A4%A7%E5%85%A8&qs=ds&form=QBRE
   - title: 多样玩法自由
     details: 生电、建筑、养老等等各种玩法
@@ -40,7 +40,82 @@ features:
 ## 如何游玩
 
 ```
-请敬请期待 cloudspur - 云潮 ~
+生存服
+mc.inspurs.work
+52700
+
+空岛服
+mc.inspurs.work
+41055
 ```
 
-## 什么？<br/>你并未获邀在此服务器上进行游戏？<br/>进群修改群昵称为游戏 ID<br/> 并发送"绑定"即可进服
+<script setup>
+import SponsorList from '/.vitepress/components/SponsorList.vue'
+
+const mySponsors = [
+  {
+    name: '蓝苺不是莓',
+    avatar: 'https://s41.ax1x.com/2026/04/06/peN2ORf.jpg',
+    message: '大好兽',
+    link: 'https://api.mmp.cc/api/qqhome?text=2567207093'
+  },
+  {
+    name: '清纯稳重大哥哥',
+    avatar: 'https://s41.ax1x.com/2026/04/05/pet4zTJ.jpg',
+    message: '不处',
+    link: 'https://api.mmp.cc/api/qqhome?text=3766404362'
+  },
+  {
+    name: '小圆',
+    avatar: 'https://s41.ax1x.com/2026/04/05/pet5vgP.jpg',
+    message: '知度，稳行',
+    link: 'https://b23.tv/lE7lBRV'
+  },
+  {
+    name: '言旭',
+    avatar: 'https://s41.ax1x.com/2026/04/05/petIZvV.jpg',
+    message: '蘸豆！',
+    link: 'https://www.mps.gov.cn/index.html'
+  },
+  {
+    name: '莱幸',
+    avatar: 'https://s41.ax1x.com/2026/04/05/petIDPA.jpg',
+    message: '旅行家',
+    link: 'https://b23.tv/F2U8ZtL'
+  },
+  {
+    name: 'crz1997',
+    avatar: 'https://s41.ax1x.com/2026/04/05/petIHMV.jpg',
+    message: '小李',
+    link: 'https://api.mmp.cc/api/qqhome?text=754579830'
+  },
+  {
+    name: '叶落长安',
+    avatar: 'https://s41.ax1x.com/2026/04/05/petoro4.jpg',
+    message: '叶落长安',
+    link: 'https://www.chinamartyrs.gov.cn/'
+  },
+  {
+    name: '乐',
+    avatar: 'https://s41.ax1x.com/2026/04/05/petoITe.jpg',
+    message: '乐',
+    link: 'https://api.mmp.cc/api/qqhome?text=3565303342'
+  },
+  {
+    name: '猫猫',
+    avatar: '/public/tx.jpg',
+    message: '猫猫老糖了',
+    link: 'https://api.mmp.cc/api/qqhome?text=1585783905'
+  },
+  {
+    name: '如梭',
+    avatar: '/public/tx2.jpg',
+    message: '你随便',
+    link: 'https://api.mmp.cc/api/qqhome?text=3367094820'
+  }
+]
+</script>
+
+## Inspurs的赞助者
+
+<SponsorList :sponsors="mySponsors" />
