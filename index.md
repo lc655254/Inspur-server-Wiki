@@ -16,6 +16,9 @@ hero:
       text: 建议反馈
       link: /FK.html
     - theme: alt
+      text: 服主处理BUG中……
+      link: /admin.html
+    - theme: alt
       text: 更新日志
       link: /UPDATE.md
     - theme: alt
