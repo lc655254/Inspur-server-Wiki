@@ -14,26 +14,26 @@ hero:
       link: /README.md
     - theme: alt
       text: 建议反馈
-      link: /FK.html
-    - theme: alt
-      text: 服主处理BUG中……
-      link: /admin.html
+      link: /FK.md
     - theme: alt
       text: 更新日志
       link: /UPDATE.md
     - theme: alt
       text: 点我加入群聊
       link: https://qm.qq.com/q/46c2WQlMG4
+    - theme: alt
+      text: 服主修BUG中……
+      link: /admin.md
 
 features:
   - title: 机制丰富优良
     details: 多样化的各种机制等待你的开发挖掘
     link: https://www.bing.com/search?q=MC%E6%9C%BA%E5%88%B6%E5%A4%A7%E5%85%A8&qs=ds&form=QBRE
   - title: 多样玩法自由
-    details: 生电、建筑、养老等等各种玩法
+    details: 生电、建筑、养老、空岛！等等各种玩法
     link: https://cn.bing.com/search?q=MC%E7%8E%A9%E6%B3%95%E5%A4%A7%E5%85%A8&qs=n&form=QBRE&sp=-1&lq=0&pq=mc%E7%8E%A9%E6%B3%95da%27q&sc=8-8&sk=&cvid=FCB5F07C85DC4210BE5B0364A3D153CD&ghsh=0&ghacc=0&ghpl=
   - title: 问题及时修复
-    details: 做到当天反馈当天修复 一切都为玩家的良好体验
+    details: 当天反馈当天修复
     link: https://bugs.mojang.com/projects/MCPE/summary
   - title: 服主和谐友善
     details: 有问必答 随便问我
