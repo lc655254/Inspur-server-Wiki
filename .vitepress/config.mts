@@ -96,7 +96,7 @@ export default defineConfig({
       ]
     },
     footer: {
-      message: '此服务器与 Mojang Studio、网易、Microsoft 没有从属关系。',
+      message: '此服务器与 Mojang Studio、网易、Microsoft 没有从属关系。<br><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">苏ICP备2026019959号-1</a>',
       copyright: 'Copyright © 2023-2026 Inspur server All Rights Reserved.'
     },
     socialLinks: [
