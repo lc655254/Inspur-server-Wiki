@@ -4,10 +4,10 @@ layout: home
 
 hero:
   name: "🌊 Inspurs"
-  text: "更新 · 更好 · 更自由的\n基岩版服务器"
-  tagline: "版本 1.21.13x | 生存 & 空岛双模式 |\n 稳定流畅 · 机制完善 · 反作弊零容忍"
+  text: "更新 · 更好 · 更自由的\n基岩版"
+  tagline: "| 生存 & 空岛双模式 |\n 稳定流畅 · 机制完善 · 反作弊零容忍"
   image:
-    src: /logo0.png
+    src: "https://s41.ax1x.com/2026/04/12/peBlIjP.png"
     alt: "Inspurs Logo"
   actions:
     - theme: brand
@@ -46,18 +46,18 @@ features:
 
 ## 🚪 如何加入服务器
 
-### 🌍 生存服 · 主服
+### 🌍 生存服
 
 ```
-地址：mc.inspurs.work
-端口：52700
+mc.inspurs.work
+52700
 ```
 
 ### ☁️ 空岛服
 
 ```
-地址：mc.inspurs.work
-端口：41055
+mc.inspurs.work
+41055
 ```
 
 > 💡 将上方地址和端口填入游戏「服务器」列表即可加入。推荐使用 `1.21.132` 版本以获得最佳体验。
