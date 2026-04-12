@@ -4,8 +4,8 @@ layout: home
 
 hero:
   name: "🌊 Inspurs"
-  text: "更新 · 更好 · 更自由的基岩版服务器"
-  tagline: "版本 1.21.13x | 生存 & 空岛双模式 | 稳定流畅 · 机制完善 · 反作弊零容忍"
+  text: "更新 · 更好 · 更自由的\n基岩版服务器"
+  tagline: "版本 1.21.13x | 生存 & 空岛双模式 |\n 稳定流畅 · 机制完善 · 反作弊零容忍"
   image:
     src: /logo0.png
     alt: "Inspurs Logo"
