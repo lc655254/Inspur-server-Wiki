@@ -28,8 +28,6 @@ export default defineConfig({
     nav: [
       { text: '主页面', link: '/' },
       { text: '服务器介绍', link: '/README.md' },
-     // { text: '空岛服Wiki', link: '/island/README.md' },
-      { text: '内测服插件列表', link: '/plugins/README.md' }
     ],
 
     sidebar: {
@@ -39,7 +37,7 @@ export default defineConfig({
         {
           text: '服务器介绍',
           items: [
-          { text: '生存服介绍', link: '/README.md' },
+          { text: '生存服介绍', link: '/Survival.md' },
          // { text: '空岛服介绍', link: '/island/README.md' },
           { text: '更新日志', link: '/UPDATE.md' },
           ]

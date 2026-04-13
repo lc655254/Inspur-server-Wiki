@@ -7,7 +7,37 @@
 ![Simulation Distance](https://img.shields.io/badge/模拟距离-8-orange?style=flat-square)
 ![License](https://img.shields.io/badge/玩法-生存%20|%20空岛-lightgrey?style=flat-square)
 
+## 🚪 加入服务器的方法
+
+> ⚡ 直接复制以下地址至游戏“服务器”列表即可加入。
+
+### 🌍 生存服（主服）
+
+```
+地址：mc.inspurs.work
+端口：52700
+```
+
+<div align="center" style="margin: 30px 0;">
+  <a href="/Survival" style="display: inline-block; background: #2d8c5a; color: white; font-weight: bold; font-size: 1.2em; padding: 14px 30px; margin: 10px 15px; border-radius: 50px; text-decoration: none; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: all 0.2s ease;">
+    🌍 前往生存服详细介绍
+  </a>
+</div>
+
+### ☁️ 空岛服
+
+```
+地址：mc.inspurs.work
+端口：41055
+```
+
 ---
+
+<div align="center" style="margin: 30px 0;">
+  <a href="#-空岛服详细介绍" style="display: inline-block; background: #5a9fd4; color: white; font-weight: bold; font-size: 1.2em; padding: 14px 30px; margin: 10px 15px; border-radius: 50px; text-decoration: none; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: all 0.2s ease;">
+    ☁️ 前往空岛服详细介绍
+  </a>
+</div>
 
 ## ✨ 我们的初衷
 
@@ -51,26 +81,6 @@
 
 ---
 
-## 🚪 加入服务器的方法
-
-### 🌍 生存服（主服）
-
-```
-地址：mc.inspurs.work
-端口：52700
-```
-
-### ☁️ 空岛服
-
-```
-地址：mc.inspurs.work
-端口：41055
-```
-
-> ⚡ 直接复制以上地址至游戏“服务器”列表即可加入。
-
----
-
 ## 💬 加入我们的社区
 
 如果你有更好的想法，或遇到任何疑问，欢迎加入官方 QQ 群向我们反馈。  
@@ -79,7 +89,5 @@
 🎈 **QQ 群号：`657209397`**
 
 > 点击加入：[Inspurs 官方交流群](https://qm.qq.com/q/yourgroupurl)
-
----
 
 _© Inspurs 基岩版服务器 · 始于热爱，忠于玩家_
