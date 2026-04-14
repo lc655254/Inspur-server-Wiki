@@ -127,6 +127,12 @@ const mySponsors = [
     avatar: 'https://s41.ax1x.com/2026/04/06/peN74hQ.jpg',
     message: '你随便',
     link: 'https://api.mmp.cc/api/qqhome?text=3367094820'
+  },
+  {
+    name: '白露',
+    avatar: 'https://s41.ax1x.com/2026/04/14/perAD3T.jpg',
+    message: '这里是白露',
+    link: 'https://api.mmp.cc/api/qqhome?text=3367094820'
   }
 ]
 </script>
