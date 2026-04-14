@@ -132,7 +132,13 @@ const mySponsors = [
     name: '白露',
     avatar: 'https://s41.ax1x.com/2026/04/14/perAD3T.jpg',
     message: '这里是白露',
-    link: 'https://api.mmp.cc/api/qqhome?text=3367094820'
+    link: 'https://space.bilibili.com/3546560696683302'
+  },
+  {
+    name: '𝕰𝖈𝖍𝖔𝖊𝖘',
+    avatar: 'https://s41.ax1x.com/2026/04/14/perAvPP.jpg',
+    message: 'I’ll stare directly at the sun but never in the mirror.',
+    link: 'https://api.mmp.cc/api/qqhome?text=2158264611'
   }
 ]
 </script>
