@@ -12,7 +12,7 @@
 > ⚡ 直接复制以下地址至游戏“服务器”列表即可加入。
 
 <div align="center" style="margin: 30px 0;">
-  <a href="/join-guide" style="display: inline-block; background: #5572f3; color: white; font-weight: bold; font-size: 1.2em; padding: 14px 30px; margin-bottom: 15px; border-radius: 50px; text-decoration: none; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: all 0.2s ease;">
+  <a href="/Join-guide" style="display: inline-block; background: #5572f3; color: white; font-weight: bold; font-size: 1.2em; padding: 14px 30px; margin-bottom: 15px; border-radius: 50px; text-decoration: none; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: all 0.2s ease;">
     📖 如何进服（白名单绑定指引）
   </a>
 </div>
