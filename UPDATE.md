@@ -8,7 +8,7 @@ const releaseData = [
   version: "v3.0.0",
   isLatest: true,
   date: "2026-04-25",
-  summary: "刷石机深层变种机制、修复岛屿/搜索/TPA等多个问题、新增空岛页面并优化网站速度"
+  summary: "刷石机深层变种机制、修复岛屿/搜索/TPA等多个问题、新增空岛页面并优化网站速度",
   changes: [
     { type: 'feature', text: '刷石机新增机制：Y≤20 时生成的圆石/矿石变为深层变种' },
     { type: 'fix', text: '修复岛屿会重叠在一起的 BUG' },

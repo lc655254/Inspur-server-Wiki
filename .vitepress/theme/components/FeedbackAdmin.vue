@@ -1,156 +1,127 @@
 <template>
-  <div class="feedback-admin" :class="{ dark: isDarkMode }">
-    <!-- 密码输入模态框 -->
-    <div v-if="!isAuthenticated" class="login-modal">
-      <div class="login-container">
-        <h2>🔐 管理员登录</h2>
+  <div class="feedback-admin">
+    <!-- 登录弹窗 -->
+    <div v-if="!isAuthenticated" class="login-overlay">
+      <div class="login-card">
+        <div class="login-icon">🔐</div>
+        <h2>管理员登录</h2>
+        <p class="login-desc">输入密码以管理玩家反馈</p>
         <div class="form-group">
-          <label for="password">管理员密码</label>
-          <input 
-            type="password" 
-            id="password" 
-            v-model="password" 
+          <input
+            type="password"
+            v-model="password"
             placeholder="请输入管理员密码"
             @keyup.enter="checkPassword"
-          >
+            class="login-input"
+          />
         </div>
-        <button class="btn btn-primary" @click="checkPassword">🔑 登录</button>
+        <button class="btn btn-login" @click="checkPassword">登 录</button>
+        <p v-if="loginError" class="login-error">{{ loginError }}</p>
       </div>
     </div>
-    
-    <!-- 主内容区域 -->
+
+    <!-- 主内容区 -->
     <div v-if="isAuthenticated" class="container">
       <header class="admin-header">
-        <div class="header-content">
-          <div>
-            <h1>🎮 玩家反馈管理</h1>
-            <p class="subtitle">所有玩家反馈将实时显示在此处</p>
-          </div>
-          <div class="header-actions">
-            <button class="btn btn-theme" @click="toggleDarkMode">
-              {{ isDarkMode ? '☀️ 亮色模式' : '🌙 深色模式' }}
-            </button>
-            <button class="btn btn-logout" @click="logout">🚪 退出登录</button>
-          </div>
+        <div>
+          <h1>🎮 玩家反馈管理</h1>
+          <p class="subtitle">所有玩家反馈实时显示</p>
         </div>
-        
-        <!-- 自动刷新控制 -->
-        <div class="auto-refresh-controls">
-          <div class="refresh-toggle">
-            <input type="checkbox" id="autoRefresh" v-model="autoRefresh">
-            <label for="autoRefresh">🔄 自动刷新</label>
-          </div>
-          <div class="refresh-interval" v-if="autoRefresh">
-            <label>刷新间隔:</label>
-            <select v-model="refreshInterval">
-              <option :value="10">10秒</option>
-              <option :value="30">30秒</option>
-              <option :value="60">1分钟</option>
-            </select>
-            <span class="last-refresh">最后刷新: {{ lastRefreshTime }}</span>
-          </div>
+        <div class="header-actions">
+          <button class="btn btn-logout" @click="logout">🚪 退出</button>
+        </div>
+
+        <!-- 自动刷新 -->
+        <div class="auto-refresh">
+          <label>
+            <input type="checkbox" v-model="autoRefresh" />
+            🔄 自动刷新
+          </label>
+          <select v-model="refreshInterval" v-if="autoRefresh">
+            <option :value="10">10秒</option>
+            <option :value="30">30秒</option>
+            <option :value="60">1分钟</option>
+          </select>
+          <span class="last-refresh">最后刷新：{{ lastRefreshTime }}</span>
         </div>
       </header>
-      
-      <!-- 统计信息 -->
-      <div class="admin-stats">
-        <div class="stat-card" @click="setFilter('all')" :class="{ active: currentFilter === 'all' }">
-          <h3>{{ totalCount }}</h3>
-          <p>📋 全部反馈</p>
+
+      <!-- 统计卡片 -->
+      <div class="stats">
+        <div class="stat-card" :class="{ active: currentFilter === 'all' }" @click="setFilter('all')">
+          <span class="stat-num">{{ totalCount }}</span>
+          <span class="stat-label">📋 全部</span>
         </div>
-        <div class="stat-card" @click="setFilter('open')" :class="{ active: currentFilter === 'open' }">
-          <h3>{{ openCount }}</h3>
-          <p>🔓 待处理</p>
+        <div class="stat-card" :class="{ active: currentFilter === 'open' }" @click="setFilter('open')">
+          <span class="stat-num">{{ openCount }}</span>
+          <span class="stat-label">🔓 待处理</span>
         </div>
-        <div class="stat-card" @click="setFilter('closed')" :class="{ active: currentFilter === 'closed' }">
-          <h3>{{ closedCount }}</h3>
-          <p>✅ 已解决</p>
+        <div class="stat-card" :class="{ active: currentFilter === 'closed' }" @click="setFilter('closed')">
+          <span class="stat-num">{{ closedCount }}</span>
+          <span class="stat-label">✅ 已解决</span>
         </div>
-        <div class="stat-card" @click="setFilter('bug')" :class="{ active: currentFilter === 'bug' }">
-          <h3>{{ bugCount }}</h3>
-          <p>🐛 BUG报告</p>
+        <div class="stat-card" :class="{ active: currentFilter === 'bug' }" @click="setFilter('bug')">
+          <span class="stat-num">{{ bugCount }}</span>
+          <span class="stat-label">🐛 BUG</span>
         </div>
       </div>
-      
-      <!-- 反馈列表 -->
-      <div class="feedback-list-container">
-        <div class="list-header">
-          <div class="filters">
-            <div class="filter-group">
-              <label>状态:</label>
-              <select v-model="statusFilter">
-                <option value="all">全部状态</option>
-                <option value="open">🔓 待处理</option>
-                <option value="closed">✅ 已解决</option>
-              </select>
-            </div>
-            <div class="filter-group">
-              <label>类型:</label>
-              <select v-model="typeFilter">
-                <option value="all">全部类型</option>
-                <option value="bug">🐛 BUG报告</option>
-                <option value="suggestion">💡 功能建议</option>
-                <option value="balance">⚖️ 游戏平衡性</option>
-                <option value="ui">🎨 界面/用户体验</option>
-                <option value="performance">🚀 性能问题</option>
-                <option value="other">❓ 其他</option>
-              </select>
-            </div>
-          </div>
-          <div class="actions">
-            <button class="btn btn-export" @click="exportToCSV">📊 导出CSV</button>
-            <button class="btn btn-danger" @click="clearAllFeedback" v-if="feedbacks.length > 0">🗑️ 清空所有</button>
-          </div>
+
+      <!-- 筛选与导出 -->
+      <div class="toolbar">
+        <div class="filters">
+          <select v-model="statusFilter">
+            <option value="all">全部状态</option>
+            <option value="open">待处理</option>
+            <option value="closed">已解决</option>
+          </select>
+          <select v-model="typeFilter">
+            <option value="all">全部类型</option>
+            <option value="bug">🐛 BUG报告</option>
+            <option value="suggestion">💡 功能建议</option>
+            <option value="balance">⚖️ 游戏平衡性</option>
+            <option value="ui">🎨 界面/用户体验</option>
+            <option value="performance">🚀 性能问题</option>
+            <option value="other">❓ 其他</option>
+          </select>
         </div>
-        
-        <div class="feedback-list">
-          <div v-if="filteredFeedbacks.length === 0" class="empty-state">
-            <p>📭 暂无反馈数据</p>
-          </div>
-          <div v-else>
-            <div class="feedback-item" v-for="feedback in filteredFeedbacks" :key="feedback.id" 
-                 :class="['severity-' + feedback.severity, 'status-' + feedback.status]">
-              <div class="feedback-main">
-                <div class="feedback-header">
-                  <h3 class="feedback-title">
-                    <span class="status-indicator" :class="feedback.status"></span>
-                    {{ feedback.feedback_title }}
-                  </h3>
-                  <div class="feedback-meta">
-                    <span class="feedback-type">{{ getTypeLabel(feedback.feedback_type) }}</span>
-                    <span class="severity-badge" :class="'severity-' + feedback.severity">
-                      {{ getSeverityLabel(feedback.severity) }}
-                    </span>
-                  </div>
-                </div>
-                <div class="feedback-content">
-                  <p>{{ feedback.feedback_content }}</p>
-                </div>
-                <div class="feedback-footer">
-                  <div class="feedback-author">
-                    <span class="player-name">👤 {{ feedback.player_name }}</span>
-                    <span class="timestamp">📅 {{ formatDate(feedback.created_at) }}</span>
-                  </div>
-                  <div class="feedback-actions">
-                    <button v-if="feedback.status === 'open'" 
-                            class="btn btn-success btn-sm" 
-                            @click="closeFeedback(feedback.id)">
-                      ✅ 标记为已完成
-                    </button>
-                    <button v-else 
-                            class="btn btn-secondary btn-sm" 
-                            @click="reopenFeedback(feedback.id)">
-                      🔓 重新打开
-                    </button>
-                    <button class="btn btn-danger btn-sm" @click="deleteFeedback(feedback.id)">🗑️ 删除</button>
-                  </div>
-                </div>
-                <div class="feedback-details" v-if="feedback.player_email || feedback.game_version || feedback.device_info">
-                  <div v-if="feedback.player_email"><strong>📧 联系方式:</strong> {{ feedback.player_email }}</div>
-                  <div v-if="feedback.game_version"><strong>🎮 游戏版本:</strong> {{ feedback.game_version }}</div>
-                  <div v-if="feedback.device_info"><strong>💻 设备信息:</strong> {{ feedback.device_info }}</div>
-                </div>
+        <div class="toolbar-actions">
+          <button class="btn btn-export" @click="exportToCSV">📊 导出CSV</button>
+          <button class="btn btn-danger" @click="clearAllFeedback" v-if="feedbacks.length">🗑️ 清空</button>
+        </div>
+      </div>
+
+      <!-- 反馈列表 -->
+      <div class="feedback-list">
+        <div v-if="filteredFeedbacks.length === 0" class="empty">📭 暂无反馈</div>
+        <div v-else class="list">
+          <div
+            v-for="fb in filteredFeedbacks"
+            :key="fb.id"
+            class="feedback-item"
+            :class="'severity-' + fb.severity"
+          >
+            <div class="item-header">
+              <span class="status-dot" :class="fb.status"></span>
+              <strong>{{ fb.feedback_title }}</strong>
+              <span class="type-badge">{{ getTypeLabel(fb.feedback_type) }}</span>
+              <span class="severity-badge" :class="'sev-' + fb.severity">
+                {{ getSeverityLabel(fb.severity) }}
+              </span>
+            </div>
+            <div class="item-body">{{ fb.feedback_content }}</div>
+            <div class="item-meta">
+              <span>👤 {{ fb.player_name }}</span>
+              <span>📅 {{ formatDate(fb.created_at) }}</span>
+              <div class="item-actions">
+                <button v-if="fb.status === 'open'" class="btn btn-success btn-sm" @click="closeFeedback(fb.id)">✅ 标记完成</button>
+                <button v-else class="btn btn-secondary btn-sm" @click="reopenFeedback(fb.id)">🔓 重新打开</button>
+                <button class="btn btn-danger btn-sm" @click="deleteFeedback(fb.id)">🗑️ 删除</button>
               </div>
+            </div>
+            <div class="item-details" v-if="fb.player_email || fb.game_version || fb.device_info">
+              <span v-if="fb.player_email">📧 {{ fb.player_email }}</span>
+              <span v-if="fb.game_version">🎮 {{ fb.game_version }}</span>
+              <span v-if="fb.device_info">💻 {{ fb.device_info }}</span>
             </div>
           </div>
         </div>
@@ -167,6 +138,7 @@ export default {
       feedbacks: [],
       isAuthenticated: false,
       password: '',
+      loginError: '',
       autoRefresh: true,
       refreshInterval: 30,
       lastRefreshTime: '刚刚',
@@ -175,64 +147,46 @@ export default {
       currentFilter: 'all',
       statusFilter: 'all',
       typeFilter: 'all',
-      severityFilter: 'all',
-      isDarkMode: false
     }
   },
   computed: {
     filteredFeedbacks() {
-      return this.feedbacks.filter(feedback => {
-        const statusMatch = this.statusFilter === 'all' || feedback.status === this.statusFilter;
-        const typeMatch = this.typeFilter === 'all' || feedback.feedback_type === this.typeFilter;
-        const severityMatch = this.severityFilter === 'all' || feedback.severity === this.severityFilter;
-        return statusMatch && typeMatch && severityMatch;
+      return this.feedbacks.filter(f => {
+        const matchStatus = this.statusFilter === 'all' || f.status === this.statusFilter;
+        const matchType = this.typeFilter === 'all' || f.feedback_type === this.typeFilter;
+        return matchStatus && matchType;
       }).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     },
-    totalCount() { return this.feedbacks.length; },
-    openCount() { return this.feedbacks.filter(f => f.status === 'open').length; },
-    closedCount() { return this.feedbacks.filter(f => f.status === 'closed').length; },
-    bugCount() { return this.feedbacks.filter(f => f.feedback_type === 'bug').length; }
+    totalCount() { return this.feedbacks.length },
+    openCount() { return this.feedbacks.filter(f => f.status === 'open').length },
+    closedCount() { return this.feedbacks.filter(f => f.status === 'closed').length },
+    bugCount() { return this.feedbacks.filter(f => f.feedback_type === 'bug').length },
   },
   mounted() {
-    this.loadThemePreference();
     this.checkAuthStatus();
     if (this.isAuthenticated) {
       this.loadFeedbacks();
       this.startAutoRefresh();
     }
   },
-  beforeUnmount() { this.stopAutoRefresh(); },
+  beforeUnmount() { this.stopAutoRefresh() },
   watch: {
-    autoRefresh(newVal) { newVal ? this.startAutoRefresh() : this.stopAutoRefresh(); },
-    refreshInterval() { this.stopAutoRefresh(); if (this.autoRefresh) this.startAutoRefresh(); }
+    autoRefresh(val) { val ? this.startAutoRefresh() : this.stopAutoRefresh() },
+    refreshInterval() { this.stopAutoRefresh(); if (this.autoRefresh) this.startAutoRefresh() }
   },
   methods: {
-    // 主题相关
-    loadThemePreference() {
-      const saved = localStorage.getItem('feedbackAdminTheme');
-      if (saved !== null) {
-        this.isDarkMode = saved === 'dark';
-      } else {
-        this.isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      }
-    },
-    toggleDarkMode() {
-      this.isDarkMode = !this.isDarkMode;
-      localStorage.setItem('feedbackAdminTheme', this.isDarkMode ? 'dark' : 'light');
-    },
-    // 原有方法
     checkAuthStatus() {
-      const auth = localStorage.getItem('feedbackAdminAuth');
-      this.isAuthenticated = auth === '655254';
+      this.isAuthenticated = localStorage.getItem('feedbackAdminAuth') === '655254';
     },
     checkPassword() {
       if (this.password === '655254') {
         this.isAuthenticated = true;
         localStorage.setItem('feedbackAdminAuth', '655254');
+        this.loginError = '';
         this.loadFeedbacks();
         this.startAutoRefresh();
       } else {
-        alert('密码错误！');
+        this.loginError = '密码错误，请重试';
       }
     },
     logout() {
@@ -246,49 +200,35 @@ export default {
         const result = await res.json();
         this.feedbacks = result.data || [];
         this.lastRefreshTime = new Date().toLocaleTimeString();
-      } catch (e) {
-        console.error("加载失败", e);
-      }
+      } catch (e) { console.error("加载失败", e) }
     },
-    async closeFeedback(id) {
-      await this.updateFeedback(id, { status: "closed" });
-    },
-    async reopenFeedback(id) {
-      await this.updateFeedback(id, { status: "open" });
-    },
+    async closeFeedback(id) { await this.updateFeedback(id, { status: "closed" }) },
+    async reopenFeedback(id) { await this.updateFeedback(id, { status: "open" }) },
     async updateFeedback(id, data) {
       try {
-        await fetch(this.baseURL + `/api/feedback/${id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
-        });
+        await fetch(this.baseURL + `/api/feedback/${id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
         this.loadFeedbacks();
-      } catch (e) { alert("操作失败"); }
+      } catch (e) { alert("操作失败") }
     },
     async deleteFeedback(id) {
       if (!confirm("确定删除？")) return;
       try {
         await fetch(this.baseURL + `/api/feedback/${id}`, { method: "DELETE" });
         this.loadFeedbacks();
-      } catch (e) { alert("删除失败"); }
+      } catch (e) { alert("删除失败") }
     },
     async clearAllFeedback() {
-      if (!confirm("确定清空所有？不可恢复！")) return;
+      if (!confirm("确定清空所有反馈？此操作不可恢复！")) return;
       try {
         await fetch(this.baseURL + "/api/feedback/clear", { method: "DELETE" });
         this.feedbacks = [];
-      } catch (e) { alert("清空失败"); }
+      } catch (e) { alert("清空失败") }
     },
     startAutoRefresh() {
       this.stopAutoRefresh();
-      if (this.autoRefresh) {
-        this.refreshTimer = setInterval(() => this.loadFeedbacks(), this.refreshInterval * 1000);
-      }
+      if (this.autoRefresh) this.refreshTimer = setInterval(() => this.loadFeedbacks(), this.refreshInterval * 1000);
     },
-    stopAutoRefresh() {
-      clearInterval(this.refreshTimer);
-    },
+    stopAutoRefresh() { clearInterval(this.refreshTimer) },
     setFilter(filter) {
       this.currentFilter = filter;
       if (filter === "open") this.statusFilter = "open";
@@ -296,9 +236,9 @@ export default {
       else if (filter === "bug") this.typeFilter = "bug";
       else { this.statusFilter = "all"; this.typeFilter = "all"; }
     },
-    getTypeLabel(type) {
+    getTypeLabel(t) {
       const map = { bug:'🐛 BUG报告', suggestion:'💡 功能建议', balance:'⚖️ 游戏平衡性', ui:'🎨 界面/用户体验', performance:'🚀 性能问题', other:'❓ 其他' };
-      return map[type] || type;
+      return map[t] || t;
     },
     getSeverityLabel(s) {
       const m = { low:'🔵 低', medium:'🟡 中', high:'🟠 高', critical:'🔴 严重' };
@@ -329,436 +269,291 @@ export default {
 </script>
 
 <style scoped>
-/* 亮色主题变量（默认） */
+/* 完全使用 VitePress 主题变量，自动适配亮色/暗色 */
 .feedback-admin {
-  --bg-primary: #f6f8fa;
-  --bg-card: #ffffff;
-  --bg-modal: #ffffff;
-  --text-primary: #24292e;
-  --text-secondary: #586069;
-  --border-color: #e1e4e8;
-  --shadow: 0 2px 10px rgba(0,0,0,0.1);
-  --shadow-lg: 0 10px 30px rgba(0,0,0,0.2);
-  --stat-hover-bg: #f0f3ff;
-  --stat-active-border: #6c5ce7;
-  --list-bg: #ffffff;
-  --empty-text: #6a737d;
-  
+  --vp-c-bg: var(--vp-c-bg);
+  --vp-c-bg-soft: var(--vp-c-bg-soft);
+  --vp-c-bg-alt: var(--vp-c-bg-alt);
+  --vp-c-text-1: var(--vp-c-text-1);
+  --vp-c-text-2: var(--vp-c-text-2);
+  --vp-c-divider: var(--vp-c-divider);
+  --vp-c-brand: var(--vp-c-brand);
+  --vp-c-brand-light: var(--vp-c-brand-light);
+  --vp-c-brand-dark: var(--vp-c-brand-dark);
+
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
   min-height: 100vh;
-  background-color: var(--bg-primary);
-  transition: background-color 0.3s, color 0.2s;
+  font-family: inherit;
 }
 
-/* 深色主题变量 */
-.feedback-admin.dark {
-  --bg-primary: #0d1117;
-  --bg-card: #161b22;
-  --bg-modal: #1f242f;
-  --text-primary: #c9d1d9;
-  --text-secondary: #8b949e;
-  --border-color: #30363d;
-  --shadow: 0 2px 10px rgba(0,0,0,0.3);
-  --shadow-lg: 0 10px 30px rgba(0,0,0,0.5);
-  --stat-hover-bg: #1f242e;
-  --stat-active-border: #8b5cf6;
-  --list-bg: #161b22;
-  --empty-text: #8b949e;
-}
-
-/* ========== 所有组件样式使用 CSS 变量 ========== */
-.login-modal {
+/* ========== 登录弹窗美化 ========== */
+.login-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
 }
-
-.login-container {
-  background: var(--bg-modal);
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: var(--shadow-lg);
+.login-card {
+  background: var(--vp-c-bg-soft);
+  border-radius: 16px;
+  padding: 40px;
   width: 90%;
-  max-width: 400px;
-}
-
-.login-container h2 {
+  max-width: 380px;
   text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  border: 1px solid var(--vp-c-divider);
+}
+.login-icon {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+.login-card h2 {
+  margin: 0 0 5px;
+  font-size: 1.5rem;
+  color: var(--vp-c-text-1);
+}
+.login-desc {
+  color: var(--vp-c-text-2);
   margin-bottom: 20px;
-  color: #6c5ce7;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.admin-header {
-  background: var(--bg-card);
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: var(--shadow);
-}
-
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-.header-actions {
-  display: flex;
-  gap: 10px;
-}
-
-h1 {
-  color: #6c5ce7;
-  margin-bottom: 5px;
-}
-
-.subtitle {
-  color: var(--text-secondary);
-  font-size: 1rem;
-}
-
-.auto-refresh-controls {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.refresh-toggle {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--text-primary);
-}
-
-.refresh-interval {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--text-primary);
-}
-
-.last-refresh {
   font-size: 0.9rem;
-  color: var(--text-secondary);
-  margin-left: 10px;
+}
+.login-input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.login-input:focus {
+  border-color: var(--vp-c-brand);
+}
+.btn-login {
+  width: 100%;
+  margin-top: 15px;
+  padding: 12px;
+  background: var(--vp-c-brand);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-login:hover {
+  background: var(--vp-c-brand-dark);
+}
+.login-error {
+  color: #d63031;
+  margin-top: 10px;
+  font-size: 0.85rem;
 }
 
+/* ========== 通用按钮 ========== */
 .btn {
-  padding: 10px 15px;
+  padding: 8px 16px;
   border: none;
   border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 0.9rem;
   cursor: pointer;
-  transition: all 0.3s;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
+  transition: opacity 0.2s;
+  background: var(--vp-c-bg-alt);
+  color: var(--vp-c-text-1);
+  border: 1px solid var(--vp-c-divider);
 }
+.btn:hover { opacity: 0.85; }
+.btn-sm { padding: 4px 10px; font-size: 0.8rem; }
+.btn-logout { background: #fd79a8; color: white; border: none; }
+.btn-export { background: var(--vp-c-brand); color: white; border: none; }
+.btn-success { background: #00b894; color: white; border: none; }
+.btn-secondary { background: #636e72; color: white; border: none; }
+.btn-danger { background: #d63031; color: white; border: none; }
 
-.btn-primary {
-  background-color: #6c5ce7;
-  color: white;
-}
-.btn-primary:hover {
-  background-color: #5b4bd4;
-}
-.btn-success {
-  background-color: #00b894;
-  color: white;
-}
-.btn-success:hover {
-  background-color: #00a085;
-}
-.btn-secondary {
-  background-color: #636e72;
-  color: white;
-}
-.btn-secondary:hover {
-  background-color: #2d3436;
-}
-.btn-danger {
-  background-color: #d63031;
-  color: white;
-}
-.btn-danger:hover {
-  background-color: #c23636;
-}
-.btn-export {
-  background-color: #0984e3;
-  color: white;
-}
-.btn-export:hover {
-  background-color: #0770c4;
-}
-.btn-logout {
-  background-color: #fd79a8;
-  color: white;
-}
-.btn-logout:hover {
-  background-color: #e84393;
-}
-.btn-theme {
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-}
-.btn-theme:hover {
-  background-color: var(--stat-hover-bg);
-}
-.btn-sm {
-  padding: 6px 12px;
-  font-size: 12px;
-}
-
-.admin-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+/* ========== 头部 ========== */
+.admin-header {
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
   gap: 15px;
 }
+.admin-header h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  color: var(--vp-c-brand);
+}
+.subtitle { color: var(--vp-c-text-2); margin: 5px 0 0; }
+.header-actions { display: flex; gap: 10px; }
+.auto-refresh {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  color: var(--vp-c-text-2);
+  font-size: 0.9rem;
+}
+.auto-refresh select {
+  background: var(--vp-c-bg-alt);
+  color: var(--vp-c-text-1);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 4px;
+  padding: 4px 8px;
+}
 
+/* ========== 统计卡片 ========== */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
 .stat-card {
-  background: var(--bg-card);
+  background: var(--vp-c-bg-soft);
+  border: 2px solid transparent;
+  border-radius: 12px;
   padding: 15px;
-  border-radius: 8px;
   text-align: center;
   cursor: pointer;
-  transition: all 0.3s;
-  border: 2px solid transparent;
-  box-shadow: var(--shadow);
+  transition: 0.2s;
+  border-color: var(--vp-c-divider);
 }
-.stat-card:hover {
-  transform: translateY(-2px);
-  background-color: var(--stat-hover-bg);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-.stat-card.active {
-  border-color: var(--stat-active-border);
-  background-color: var(--stat-hover-bg);
-}
-.stat-card h3 {
-  font-size: 1.8rem;
-  margin-bottom: 5px;
-  color: #6c5ce7;
-}
-.stat-card p {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-}
+.stat-card.active { border-color: var(--vp-c-brand); }
+.stat-card:hover { background: var(--vp-c-bg-alt); }
+.stat-num { font-size: 1.8rem; font-weight: bold; color: var(--vp-c-brand); }
+.stat-label { display: block; color: var(--vp-c-text-2); font-size: 0.85rem; }
 
-.feedback-list-container {
-  background: var(--list-bg);
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: var(--shadow);
-}
-
-.list-header {
+/* ========== 工具栏 ========== */
+.toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  border-bottom: 1px solid var(--border-color);
   flex-wrap: wrap;
-  gap: 15px;
-}
-.filters {
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-.filter-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.filter-group label {
-  margin-bottom: 0;
-  white-space: nowrap;
-  font-size: 14px;
-  color: var(--text-primary);
-}
-.filter-group select {
-  width: auto;
-  min-width: 120px;
-  padding: 8px 12px;
-  font-size: 14px;
-  background-color: var(--bg-card);
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-}
-.actions {
-  display: flex;
   gap: 10px;
+  margin-bottom: 15px;
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  padding: 15px;
+}
+.filters { display: flex; gap: 10px; }
+.filters select {
+  /* 基础外观 */
+  background: var(--vp-c-bg-alt);
+  color: var(--vp-c-text-1);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 6px;
+  padding: 8px 32px 8px 12px; /* 右侧留出箭头空间 */
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  appearance: none; /* 移除默认箭头 */
+  -webkit-appearance: none;
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 14px;
+  /* 使用内联 SVG 作为自定义箭头，颜色跟随文字 */
+  background-image: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23666666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.feedback-list {
-  padding: 0;
+
+
+.filters select:hover {
+  border-color: var(--vp-c-brand);
 }
+
+.filters select:focus {
+  outline: none;
+  border-color: var(--vp-c-brand);
+  box-shadow: 0 0 0 2px var(--vp-c-brand-light);
+}
+
+/* 选项样式（在下拉列表中） */
+.filters select option {
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-1);
+  padding: 8px;
+}
+
+/* 针对 Windows 高对比度或某些浏览器，确保 option 背景不为白色 */
+@media (prefers-color-scheme: dark) {
+  .filters select option {
+    background: #1e1e1e;
+    color: #e0e0e0;
+  }
+  
+  /* 新增：暗色下的浅色箭头 */
+  .filters select {
+    background-image: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23cccccc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  }
+}
+
+.toolbar-actions { display: flex; gap: 10px; }
+
+/* ========== 反馈列表 ========== */
+.feedback-list {
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.empty { padding: 60px 0; text-align: center; color: var(--vp-c-text-2); }
 .feedback-item {
   padding: 20px;
-  border-bottom: 1px solid var(--border-color);
-  transition: background-color 0.3s;
+  border-bottom: 1px solid var(--vp-c-divider);
 }
-.feedback-item:hover {
-  background-color: var(--stat-hover-bg);
-}
-.feedback-item.status-closed {
-  opacity: 0.7;
-}
-.feedback-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.feedback-title {
-  margin: 0;
-  font-size: 1.1rem;
-  color: var(--text-primary);
+.feedback-item:last-child { border-bottom: none; }
+.item-header {
   display: flex;
   align-items: center;
-  gap: 8px;
-}
-.status-indicator {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
-.status-indicator.open {
-  background-color: #28a745;
-}
-.status-indicator.closed {
-  background-color: #6c757d;
-}
-.feedback-meta {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.feedback-type {
-  background-color: var(--border-color);
-  padding: 3px 8px;
-  border-radius: 12px;
-  font-size: 0.8rem;
-  color: var(--text-primary);
-}
-.severity-badge {
-  padding: 3px 8px;
-  border-radius: 12px;
-  font-size: 0.8rem;
-  color: white;
-  font-weight: bold;
-}
-.severity-badge.severity-critical { background-color: #d63031; }
-.severity-badge.severity-high { background-color: #e17055; }
-.severity-badge.severity-medium { background-color: #fdcb6e; color: #2d3436; }
-.severity-badge.severity-low { background-color: #00b894; }
-
-.feedback-content {
-  margin-bottom: 15px;
-  line-height: 1.5;
-  color: var(--text-primary);
-}
-.feedback-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
   gap: 10px;
-}
-.feedback-author {
-  display: flex;
-  gap: 15px;
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-}
-.player-name {
-  font-weight: 600;
-}
-.timestamp {
-  color: var(--text-secondary);
-}
-.feedback-actions {
-  display: flex;
-  gap: 8px;
-}
-.feedback-details {
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid var(--border-color);
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  margin-bottom: 8px;
 }
-.empty-state {
-  text-align: center;
-  padding: 60px 20px;
-  color: var(--empty-text);
+.status-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #6c757d;
 }
-.empty-state p {
-  font-size: 1.2rem;
+.status-dot.open { background: #28a745; }
+.type-badge, .severity-badge {
+  padding: 2px 8px; border-radius: 20px; font-size: 0.75rem;
+  background: var(--vp-c-bg-alt); color: var(--vp-c-text-2);
+}
+.severity-badge.sev-low { background: #00b894; color: white; }
+.severity-badge.sev-medium { background: #fdcb6e; color: black; }
+.severity-badge.sev-high { background: #e17055; color: white; }
+.severity-badge.sev-critical { background: #d63031; color: white; }
+.item-body { margin-bottom: 10px; line-height: 1.5; }
+.item-meta {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 15px;
+  font-size: 0.85rem; color: var(--vp-c-text-2);
+}
+.item-actions { margin-left: auto; display: flex; gap: 6px; }
+.item-details {
+  margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--vp-c-divider);
+  font-size: 0.8rem; color: var(--vp-c-text-2); display: flex; gap: 15px; flex-wrap: wrap;
 }
 
-@media (max-width: 768px) {
-  .header-content {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .admin-stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .list-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .filters {
-    width: 100%;
-  }
-  .filter-group {
-    flex: 1;
-    min-width: 120px;
-  }
-  .filter-group select {
-    width: 100%;
-  }
-  .actions {
-    width: 100%;
-    justify-content: flex-end;
-  }
-  .feedback-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .feedback-footer {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .feedback-actions {
-    width: 100%;
-    justify-content: flex-end;
-  }
+@media (max-width: 640px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .toolbar { flex-direction: column; align-items: stretch; }
+  .filters { flex-wrap: wrap; }
 }
 </style>

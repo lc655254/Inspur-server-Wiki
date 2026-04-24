@@ -15,7 +15,7 @@ hero:
       link: /README.md
     - theme: alt
       text: 💬 建议反馈
-      link: /FK.md
+      link: /feedback.md
     - theme: alt
       text: 📋 更新日志
       link: /UPDATE.md
