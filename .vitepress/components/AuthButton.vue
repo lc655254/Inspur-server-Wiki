@@ -46,62 +46,39 @@ export default {
       if (token && username && role) {
         this.user = { username, role };
       }
-      // 可选：验证 token 有效性并同步最新角色
-      if (token) this.checkLogin();
-    },
-    async checkLogin() {
-      const token = localStorage.getItem('token');
-      if (!token) return;
-      try {
-        const res = await fetch('http://api.inspurs.work/api/user/info', {
-          headers: { 'Authorization': 'Bearer ' + token }
-        });
-        const data = await res.json();
-        if (data.code === 200) {
-          this.user = { username: data.data.username, role: data.data.role };
-          localStorage.setItem('username', data.data.username);
-          localStorage.setItem('role', data.data.role);
-        } else {
-          this.logout();
-        }
-      } catch (e) {
-        // 网络错误保留离线状态
-      }
     },
     async submitAuth() {
-    this.errorMsg = '';
-    const url = this.isRegisterMode ? '/api/user/register' : '/api/user/login';
-    try {
+      this.errorMsg = '';
+      const url = this.isRegisterMode ? '/api/user/register' : '/api/user/login';
+      try {
         const res = await fetch('http://api.inspurs.work' + url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(this.form)
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(this.form)
         });
         const data = await res.json();
         if (data.code === 200) {
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('username', data.username);
-            localStorage.setItem('role', data.role);
-            this.user = { username: data.username, role: data.role };
-            this.showModal = false;
-            this.form = { username: '', password: '' };
-            // 强制刷新页面，确保所有组件更新登录状态
-            location.reload();
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('username', data.username);
+          localStorage.setItem('role', data.role);
+          this.user = { username: data.username, role: data.role };
+          this.showModal = false;
+          this.form = { username: '', password: '' };
+          location.reload(); // 强制刷新页面，确保所有组件重新加载
         } else {
-            this.errorMsg = data.msg;
+          this.errorMsg = data.msg;
         }
-    } catch (e) {
+      } catch (e) {
         this.errorMsg = '网络错误';
-    }
-},
+      }
+    },
     logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    localStorage.removeItem('role');
-    this.user = null;
-    // 强制刷新页面，清除所有状态
-    location.reload();
-}
+      localStorage.removeItem('token');
+      localStorage.removeItem('username');
+      localStorage.removeItem('role');
+      this.user = null;
+      location.reload(); // 强制刷新页面
+    }
   }
 }
 </script>

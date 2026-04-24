@@ -8,22 +8,26 @@
       </div>
 
       <div class="toolbar">
-        <div class="filters">
-          <select v-model="statusFilter">
-            <option value="all">全部状态</option>
-            <option value="open">待处理</option>
-            <option value="in_progress">处理中</option>
-            <option value="closed">已解决</option>
-          </select>
-          <select v-model="typeFilter">
-            <option value="all">全部类型</option>
-            <option value="bug">🐛 BUG</option>
-            <option value="suggestion">💡 建议</option>
-            <option value="balance">⚖️ 平衡</option>
-            <option value="ui">🎨 UI</option>
-            <option value="performance">🚀 性能</option>
-            <option value="other">❓ 其他</option>
-          </select>
+        <div class="left-actions">
+          <!-- 使用 adminVisible 保证按钮出现 -->
+          <a v-if="isAdmin" href="/admin" class="btn btn-admin">🔧 管理反馈</a>
+          <div class="filters">
+            <select v-model="statusFilter">
+              <option value="all">全部状态</option>
+              <option value="open">待处理</option>
+              <option value="in_progress">处理中</option>
+              <option value="closed">已解决</option>
+            </select>
+            <select v-model="typeFilter">
+              <option value="all">全部类型</option>
+              <option value="bug">🐛 BUG</option>
+              <option value="suggestion">💡 建议</option>
+              <option value="balance">⚖️ 平衡</option>
+              <option value="ui">🎨 UI</option>
+              <option value="performance">🚀 性能</option>
+              <option value="other">❓ 其他</option>
+            </select>
+          </div>
         </div>
         <button class="btn btn-primary" @click="view = 'submit'">📝 提交新反馈</button>
       </div>
@@ -37,7 +41,6 @@
             <strong class="fb-title">{{ fb.feedback_title }}</strong>
             <span class="type-badge">{{ typeText(fb.feedback_type) }}</span>
             <span v-if="fb.hidden" class="hidden-badge">👁️‍🗨️</span>
-             <button v-if="isAdmin" class="btn btn-sm btn-danger" @click.stop="deleteFeedback(fb.id)">🗑️</button>
           </div>
           <p class="fb-preview">{{ (fb.feedback_content || '').substring(0, 120) }}...</p>
           <div class="fb-meta">
@@ -156,6 +159,7 @@ export default {
       loggedIn: false,
       currentUser: null,
       quickEmojis: ['😀', '😂', '😢', '😡', '👍', '👎', '❤️', '🎉', '🤔', '🔥']
+      
     }
   },
   computed: {
@@ -167,7 +171,7 @@ export default {
       });
     },
     isAdmin() {
-      return this.currentUser && this.currentUser.role === 'admin';
+        return localStorage.getItem('role') === 'admin';
     },
     sortedComments() {
       return [...this.comments].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
@@ -176,7 +180,7 @@ export default {
   mounted() {
     this.checkAuth();
     this.loadList();
-  },
+},
   methods: {
     checkAuth() {
     const token = localStorage.getItem('token');
@@ -186,7 +190,6 @@ export default {
         username: localStorage.getItem('username') || '',
         role: role || 'user'
     };
-    console.log('当前用户:', this.currentUser); // 调试用，可查看
 },
     async loadList() {
       this.loading = true;
@@ -288,10 +291,10 @@ export default {
     },
     insertEmoji(emoji) { this.newComment += emoji; },
     canDeleteComment(comment) {
-    if (!this.currentUser) return false;
-    if (this.currentUser.role === 'admin') return true;
-    return comment.username === this.currentUser.username;
-},
+      if (!this.currentUser) return false;
+      if (this.currentUser.role === 'admin') return true;
+      return comment.username === this.currentUser.username;
+    },
     async deleteComment(commentId) {
       if (!confirm('确定删除该评论？')) return;
       const token = localStorage.getItem('token');
@@ -315,22 +318,16 @@ export default {
       } catch (e) { alert('操作失败') }
     },
     async deleteFeedback(id) {
-    if (!confirm('确定删除该反馈？')) return;
-    const token = localStorage.getItem('token');
-    if (!token) return alert('未登录');
-    const res = await fetch(`http://api.inspurs.work/api/feedback/${id}`, {
-        method: 'DELETE',
-        headers: { 'Authorization': 'Bearer ' + token }
-    });
-    const data = await res.json();
-    if (data.code === 200) {
-        alert('删除成功');
+      if (!confirm('确定删除该反馈？')) return;
+      const token = localStorage.getItem('token');
+      try {
+        await fetch(`http://api.inspurs.work/api/feedback/${id}`, {
+          method: 'DELETE', headers: { 'Authorization': 'Bearer ' + token }
+        });
         this.view = 'list';
         this.loadList();
-    } else {
-        alert('删除失败：' + data.msg);
-    }
-},
+      } catch (e) { alert('删除失败') }
+    },
     statusText(s) {
       const map = { open:'🔓 待处理', in_progress:'⏳ 处理中', closed:'✅ 已解决' };
       return map[s] || s;
@@ -349,15 +346,46 @@ export default {
 </script>
 
 <style scoped>
+/* 样式保持之前的美化版，增加 .btn-admin 和 .left-actions 调整 */
 .public-feedback { max-width: 1000px; margin: 0 auto; padding: 20px; color: var(--vp-c-text-1); }
 .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-.toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.left-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
 .filters { display: flex; gap: 10px; }
 .filters select {
   background: var(--vp-c-bg-alt); color: var(--vp-c-text-1); border: 1px solid var(--vp-c-divider);
   border-radius: 6px; padding: 6px 30px 6px 10px; appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23666666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 8px center; background-size: 12px;
+}
+.btn-admin {
+  background: var(--vp-c-bg-alt);
+  color: var(--vp-c-brand);
+  border: 1px solid var(--vp-c-brand);
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: 0.2s;
+}
+.btn-admin:hover {
+  background: var(--vp-c-brand);
+  color: white;
 }
 .fb-card {
   background: var(--vp-c-bg-soft); border: 1px solid var(--vp-c-divider);
@@ -423,4 +451,10 @@ export default {
 .btn-back:hover { text-decoration: underline; }
 .btn-danger { background: #d63031; color: white; border: none; }
 .empty { text-align: center; padding: 40px; color: var(--vp-c-text-2); }
+
+@media (max-width: 640px) {
+  .left-actions { width: 100%; flex-direction: column; align-items: flex-start; }
+  .filters { width: 100%; }
+  .filters select { width: 100%; }
+}
 </style>
