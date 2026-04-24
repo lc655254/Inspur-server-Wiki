@@ -11,13 +11,27 @@
     <!-- 弹出框 -->
     <div v-if="showModal" class="modal-overlay" @click.self="showModal = false">
       <div class="modal-box">
-        <h3>{{ isRegisterMode ? '注册' : '登录' }}</h3>
+        <!-- Tab 切换栏 -->
+        <div class="tab-bar">
+          <button
+            :class="['tab-btn', { active: !isRegisterMode }]"
+            @click="isRegisterMode = false"
+          >
+            登录
+          </button>
+          <button
+            :class="['tab-btn', { active: isRegisterMode }]"
+            @click="isRegisterMode = true"
+          >
+            注册
+          </button>
+        </div>
+
         <input v-model="form.username" placeholder="用户名" />
         <input v-model="form.password" type="password" placeholder="密码（至少6位）" />
-        <div class="modal-actions">
-          <button class="btn btn-primary" @click="submitAuth">{{ isRegisterMode ? '注册' : '登录' }}</button>
-          <button class="btn btn-secondary" @click="toggleMode">{{ isRegisterMode ? '已有账号？去登录' : '没有账号？去注册' }}</button>
-        </div>
+        <button class="btn btn-primary" @click="submitAuth">
+          {{ isRegisterMode ? '注 册' : '登 录' }}
+        </button>
         <p class="error" v-if="errorMsg">{{ errorMsg }}</p>
       </div>
     </div>
@@ -70,10 +84,6 @@ export default {
         }
       } catch (e) { this.errorMsg = '网络错误' }
     },
-    toggleMode() {
-      this.isRegisterMode = !this.isRegisterMode;
-      this.errorMsg = '';
-    },
     logout() {
       localStorage.removeItem('token');
       this.user = null;
@@ -94,7 +104,7 @@ export default {
   color: var(--vp-c-text-1);
 }
 
-/* 增强按钮样式 */
+/* 通用按钮 */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -130,7 +140,7 @@ export default {
   background: var(--vp-c-bg-soft);
 }
 
-/* 弹窗样式 */
+/* 弹窗 */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -154,28 +164,40 @@ export default {
   gap: 12px;
 }
 
+/* Tab 栏 */
+.tab-bar {
+  display: flex;
+  margin-bottom: 10px;
+  gap: 4px;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  background: var(--vp-c-bg-alt);
+  color: var(--vp-c-text-2);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s;
+  border: 1px solid var(--vp-c-divider);
+}
+
+.tab-btn.active {
+  background: var(--vp-c-brand);
+  color: white;
+  border-color: var(--vp-c-brand);
+  font-weight: 600;
+}
+
 .modal-box input {
   padding: 10px;
   border: 1px solid var(--vp-c-divider);
   border-radius: 6px;
   background: var(--vp-c-bg);
   color: var(--vp-c-text-1);
-}
-
-.modal-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.btn-secondary {
-  background: transparent;
-  color: var(--vp-c-brand);
-  border: none;
-  padding: 0;
-  font-size: 0.85rem;
-  text-decoration: underline;
-  cursor: pointer;
 }
 
 .error {
