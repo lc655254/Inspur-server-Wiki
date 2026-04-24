@@ -62,7 +62,7 @@
       <div v-if="selectedFeedback" class="detail-card">
         <div class="detail-header">
           <h2 class="feedback-title">{{ selectedFeedback.feedback_title }}</h2>
-          <div v-if="isAdmin" class="admin-actions">
+          <div v-if="adminVisible" class="admin-actions">
             <button class="btn btn-sm" @click="toggleHide(selectedFeedback)">
               {{ selectedFeedback.hidden ? '👁️ 显示' : '🙈 隐藏' }}
             </button>
@@ -158,8 +158,8 @@ export default {
       loading: true,
       loggedIn: false,
       currentUser: null,
+      adminVisible: false,   // 管理员按钮显示控制
       quickEmojis: ['😀', '😂', '😢', '😡', '👍', '👎', '❤️', '🎉', '🤔', '🔥']
-      
     }
   },
   computed: {
@@ -170,17 +170,16 @@ export default {
         return ms && mt;
       });
     },
-    isAdmin() {
-        return localStorage.getItem('role') === 'admin';
-    },
+    // 注意：这里不再有 isAdmin 计算属性
     sortedComments() {
       return [...this.comments].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     }
   },
   mounted() {
+    this.adminVisible = localStorage.getItem('role') === 'admin';
     this.checkAuth();
     this.loadList();
-},
+  },
   methods: {
     checkAuth() {
     const token = localStorage.getItem('token');
