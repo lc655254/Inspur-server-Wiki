@@ -5,17 +5,21 @@ import ChangelogList from './.vitepress/components/ChangelogList.vue'
 
 const releaseData = [
   {
-    version: "v3.0.0",
-    isLatest: true,
-    date: "2026-04-19",
-    summary: "本次更新优化刷石机机制并修复岛屿重叠问题",
-    changes: [
-      { type: 'feature', text: '刷石机新增机制：Y≤20 时生成的圆石/矿石变为深层变种' },
-      { type: 'fix', text: '修复岛屿会重叠在一起的 BUG' },
-      { type: 'fix', text: '修复部分可能出现的崩服 BUG' },
-      { type: 'fix', text: '修复 TPA 异常报错' }
-    ]
-  },
+  version: "v3.0.0",
+  isLatest: true,
+  date: "2026-04-25",
+  summary: "刷石机深层变种机制、修复岛屿/搜索/TPA等多个问题、新增空岛页面并优化网站速度"
+  changes: [
+    { type: 'feature', text: '刷石机新增机制：Y≤20 时生成的圆石/矿石变为深层变种' },
+    { type: 'fix', text: '修复岛屿会重叠在一起的 BUG' },
+    { type: 'fix', text: '修复部分可能出现的崩服 BUG' },
+    { type: 'fix', text: '修复 TPA 异常报错' },
+    { type: 'fix', text: '修复官网搜索功能无法正常使用' },
+    { type: 'feature', text: '新增空岛服详细页面' },
+    { type: 'feature', text: '新增如何进服详细页面' },
+    { type: 'perf', text: '优化网页访问速度' }
+  ]
+},
   {
     version: "v2.5.0",
     isLatest: false,
