@@ -9,8 +9,7 @@
 
       <div class="toolbar">
         <div class="left-actions">
-          <!-- 使用 adminVisible 保证按钮出现 -->
-          <a v-if="isAdmin" href="/admin" class="btn btn-admin">🔧 管理反馈</a>
+          <a v-if="adminVisible" href="/admin" class="btn btn-admin">🔧 管理反馈</a>
           <div class="filters">
             <select v-model="statusFilter">
               <option value="all">全部状态</option>
@@ -158,7 +157,7 @@ export default {
       loading: true,
       loggedIn: false,
       currentUser: null,
-      adminVisible: false,   // 管理员按钮显示控制
+      adminVisible: false,
       quickEmojis: ['😀', '😂', '😢', '😡', '👍', '👎', '❤️', '🎉', '🤔', '🔥']
     }
   },
@@ -170,7 +169,6 @@ export default {
         return ms && mt;
       });
     },
-    // 注意：这里不再有 isAdmin 计算属性
     sortedComments() {
       return [...this.comments].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     }
@@ -182,14 +180,14 @@ export default {
   },
   methods: {
     checkAuth() {
-    const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
-    this.loggedIn = !!token;
-    this.currentUser = {
+      const token = localStorage.getItem('token');
+      const role = localStorage.getItem('role');
+      this.loggedIn = !!token;
+      this.currentUser = {
         username: localStorage.getItem('username') || '',
         role: role || 'user'
-    };
-},
+      };
+    },
     async loadList() {
       this.loading = true;
       try {
@@ -345,23 +343,12 @@ export default {
 </script>
 
 <style scoped>
-/* 样式保持之前的美化版，增加 .btn-admin 和 .left-actions 调整 */
 .public-feedback { max-width: 1000px; margin: 0 auto; padding: 20px; color: var(--vp-c-text-1); }
 .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
 .toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 20px;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;
 }
-.left-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
+.left-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .filters { display: flex; gap: 10px; }
 .filters select {
   background: var(--vp-c-bg-alt); color: var(--vp-c-text-1); border: 1px solid var(--vp-c-divider);
@@ -370,22 +357,11 @@ export default {
   background-repeat: no-repeat; background-position: right 8px center; background-size: 12px;
 }
 .btn-admin {
-  background: var(--vp-c-bg-alt);
-  color: var(--vp-c-brand);
-  border: 1px solid var(--vp-c-brand);
-  border-radius: 6px;
-  padding: 6px 16px;
-  font-size: 0.9rem;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: 0.2s;
+  background: var(--vp-c-bg-alt); color: var(--vp-c-brand); border: 1px solid var(--vp-c-brand);
+  border-radius: 6px; padding: 6px 16px; font-size: 0.9rem; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 6px; transition: 0.2s;
 }
-.btn-admin:hover {
-  background: var(--vp-c-brand);
-  color: white;
-}
+.btn-admin:hover { background: var(--vp-c-brand); color: white; }
 .fb-card {
   background: var(--vp-c-bg-soft); border: 1px solid var(--vp-c-divider);
   border-radius: 10px; padding: 15px; margin-bottom: 10px; cursor: pointer; transition: 0.2s;
