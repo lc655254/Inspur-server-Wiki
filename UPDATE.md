@@ -13,7 +13,7 @@ const releaseData = [
       { type: 'feature', text: '刷石机新增机制：Y≤20 时生成的圆石/矿石变为深层变种' },
       { type: 'fix', text: '修复岛屿会重叠在一起的 BUG' },
       { type: 'fix', text: '修复部分可能出现的崩服 BUG' }
-      { type: 'fix', text: '修复 TPA 异常报错' },
+      { type: 'fix', text: '修复 TPA 异常报错' }
     ]
   },
   {
