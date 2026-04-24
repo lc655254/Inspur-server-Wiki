@@ -216,24 +216,24 @@ header {
   text-align: center;
   margin-bottom: 30px;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: var(--vp-c-bg-soft);
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
-  color: #6c5ce7;
+  color: var(--vp-c-brand);
   margin-bottom: 10px;
 }
 
 .subtitle {
-  color: #2d3436;
+  color: var(--vp-c-text-1);
   font-size: 1.2rem;
   margin-bottom: 20px;
 }
 
 .card {
-  background-color: white;
+  background-color: var(--vp-c-bg);
   border-radius: 15px;
   padding: 30px;
   margin-bottom: 20px;
@@ -248,20 +248,22 @@ label {
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: #2d3436;
+  color: var(--vp-c-text-1);
 }
 
 input, select, textarea {
   width: 100%;
   padding: 12px 15px;
-  border: 2px solid #ddd;
+  border: 2px solid var(--vp-c-divider);
   border-radius: 8px;
   font-size: 16px;
+  background-color: var(--vp-c-bg-alt);
+  color: var(--vp-c-text-1);
   transition: border-color 0.3s;
 }
 
 input:focus, select:focus, textarea:focus {
-  border-color: #6c5ce7;
+  border-color: var(--vp-c-brand);
   outline: none;
 }
 
@@ -280,6 +282,7 @@ textarea {
   display: flex;
   align-items: center;
   gap: 8px;
+  color: var(--vp-c-text-1);
 }
 
 .radio-option input {
@@ -301,22 +304,22 @@ textarea {
 }
 
 .btn-primary {
-  background-color: #6c5ce7;
+  background-color: var(--vp-c-brand);
   color: white;
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: #a29bfe;
+  background-color: var(--vp-c-brand-light);
 }
 
 .btn-secondary {
-  background-color: #f5f6fa;
-  color: #2d3436;
+  background-color: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-1);
   margin-left: 15px;
 }
 
 .btn-secondary:hover {
-  background-color: #e0e0e0;
+  background-color: var(--vp-c-bg-alt);
 }
 
 .btn:disabled {
