@@ -1,5 +1,9 @@
-# 反馈与建议
+---
+layout: page
+title: 反馈管理
+---
 
-请使用下面的表单提交您的反馈：
-
-<FeedbackForm />
+<script setup>
+import FeedbackAdmin from './.vitepress/components/FeedbackAdmin.vue'
+</script>
+<FeedbackAdmin />

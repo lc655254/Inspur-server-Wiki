@@ -37,6 +37,7 @@
             <strong class="fb-title">{{ fb.feedback_title }}</strong>
             <span class="type-badge">{{ typeText(fb.feedback_type) }}</span>
             <span v-if="fb.hidden" class="hidden-badge">👁️‍🗨️</span>
+             <button v-if="isAdmin" class="btn btn-sm btn-danger" @click.stop="deleteFeedback(fb.id)">🗑️</button>
           </div>
           <p class="fb-preview">{{ (fb.feedback_content || '').substring(0, 120) }}...</p>
           <div class="fb-meta">
@@ -178,23 +179,22 @@ export default {
   },
   methods: {
     checkAuth() {
-      const token = localStorage.getItem('token');
-      const role = localStorage.getItem('role');
-      this.loggedIn = !!token;
-      if (role) {
-        this.currentUser = {
-          username: localStorage.getItem('username'),
-          role: role
-        };
-      }
-    },
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
+    this.loggedIn = !!token;
+    this.currentUser = {
+        username: localStorage.getItem('username') || '',
+        role: role || 'user'
+    };
+    console.log('当前用户:', this.currentUser); // 调试用，可查看
+},
     async loadList() {
       this.loading = true;
       try {
         const token = localStorage.getItem('token');
         const headers = {};
         if (token) headers['Authorization'] = 'Bearer ' + token;
-        const res = await fetch('http://localhost:5000/api/feedback/public/list', { headers });
+        const res = await fetch('http://api.inspurs.work/api/feedback/public/list', { headers });
         const data = await res.json();
         this.feedbacks = (data.data || []).map(f => ({
           ...f,
@@ -212,7 +212,7 @@ export default {
       const headers = {};
       if (token) headers['Authorization'] = 'Bearer ' + token;
       try {
-        const res = await fetch(`http://localhost:5000/api/feedback/public/${fb.id}`, { headers });
+        const res = await fetch(`http://api.inspurs.work/api/feedback/public/${fb.id}`, { headers });
         const data = await res.json();
         if (data.code === 200) {
           this.selectedFeedback = data.data;
@@ -224,7 +224,7 @@ export default {
       if (!this.loggedIn) return alert('请先登录');
       const token = localStorage.getItem('token');
       try {
-        const res = await fetch(`http://localhost:5000/api/feedback/${this.selectedFeedback.id}/vote`, {
+        const res = await fetch(`http://api.inspurs.work/api/feedback/${this.selectedFeedback.id}/vote`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
           body: JSON.stringify({ vote: dir })
@@ -233,8 +233,7 @@ export default {
         if (data.code === 200) {
           this.selectedFeedback.likes = Math.max(0, data.total);
           this.selectedFeedback.dislikes = Math.max(0, -data.total);
-          // 更新个人投票状态
-          const vRes = await fetch(`http://localhost:5000/api/feedback/${this.selectedFeedback.id}/votes`, {
+          const vRes = await fetch(`http://api.inspurs.work/api/feedback/${this.selectedFeedback.id}/votes`, {
             headers: { 'Authorization': 'Bearer ' + token }
           });
           const vData = await vRes.json();
@@ -246,7 +245,7 @@ export default {
       if (!this.loggedIn) return alert('请先登录');
       const token = localStorage.getItem('token');
       try {
-        const res = await fetch(`http://localhost:5000/api/comment/${comment.id}/vote`, {
+        const res = await fetch(`http://api.inspurs.work/api/comment/${comment.id}/vote`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
           body: JSON.stringify({ vote: dir })
@@ -255,7 +254,7 @@ export default {
         if (data.code === 200) {
           comment.likes = Math.max(0, data.total);
           comment.dislikes = Math.max(0, -data.total);
-          const vRes = await fetch(`http://localhost:5000/api/comment/${comment.id}/votes`, {
+          const vRes = await fetch(`http://api.inspurs.work/api/comment/${comment.id}/votes`, {
             headers: { 'Authorization': 'Bearer ' + token }
           });
           const vData = await vRes.json();
@@ -267,7 +266,7 @@ export default {
       if (!this.newComment.trim()) return;
       const token = localStorage.getItem('token');
       try {
-        const res = await fetch(`http://localhost:5000/api/feedback/${this.selectedFeedback.id}/comment`, {
+        const res = await fetch(`http://api.inspurs.work/api/feedback/${this.selectedFeedback.id}/comment`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
           body: JSON.stringify({ content: this.newComment })
@@ -289,15 +288,15 @@ export default {
     },
     insertEmoji(emoji) { this.newComment += emoji; },
     canDeleteComment(comment) {
-      if (!this.currentUser) return false;
-      if (this.isAdmin) return true;
-      return comment.username === this.currentUser.username;
-    },
+    if (!this.currentUser) return false;
+    if (this.currentUser.role === 'admin') return true;
+    return comment.username === this.currentUser.username;
+},
     async deleteComment(commentId) {
       if (!confirm('确定删除该评论？')) return;
       const token = localStorage.getItem('token');
       try {
-        await fetch(`http://localhost:5000/api/comment/${commentId}`, {
+        await fetch(`http://api.inspurs.work/api/comment/${commentId}`, {
           method: 'DELETE', headers: { 'Authorization': 'Bearer ' + token }
         });
         this.comments = this.comments.filter(c => c.id !== commentId);
@@ -307,7 +306,7 @@ export default {
       const token = localStorage.getItem('token');
       const newHidden = fb.hidden ? 0 : 1;
       try {
-        await fetch(`http://localhost:5000/api/feedback/${fb.id}/hide`, {
+        await fetch(`http://api.inspurs.work/api/feedback/${fb.id}/hide`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
           body: JSON.stringify({ hidden: newHidden })
@@ -316,16 +315,22 @@ export default {
       } catch (e) { alert('操作失败') }
     },
     async deleteFeedback(id) {
-      if (!confirm('确定删除该反馈？')) return;
-      const token = localStorage.getItem('token');
-      try {
-        await fetch(`http://localhost:5000/api/feedback/${id}`, {
-          method: 'DELETE', headers: { 'Authorization': 'Bearer ' + token }
-        });
+    if (!confirm('确定删除该反馈？')) return;
+    const token = localStorage.getItem('token');
+    if (!token) return alert('未登录');
+    const res = await fetch(`http://api.inspurs.work/api/feedback/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const data = await res.json();
+    if (data.code === 200) {
+        alert('删除成功');
         this.view = 'list';
         this.loadList();
-      } catch (e) { alert('删除失败') }
-    },
+    } else {
+        alert('删除失败：' + data.msg);
+    }
+},
     statusText(s) {
       const map = { open:'🔓 待处理', in_progress:'⏳ 处理中', closed:'✅ 已解决' };
       return map[s] || s;
