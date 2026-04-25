@@ -49,9 +49,11 @@ export default {
     },
     async submitAuth() {
       this.errorMsg = '';
+      // 修复点：url 已经是 /api/user/login 或 /api/user/register，不要在前面再加 /api
       const url = this.isRegisterMode ? '/api/user/register' : '/api/user/login';
       try {
-        const res = await fetch('http://api.inspurs.work/api' + url, {
+        // 正确的请求地址：基础地址 + 路由
+        const res = await fetch('http://api.inspurs.work' + url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(this.form)
@@ -64,7 +66,7 @@ export default {
           this.user = { username: data.username, role: data.role };
           this.showModal = false;
           this.form = { username: '', password: '' };
-          location.reload(); // 强制刷新页面，确保所有组件重新加载
+          location.reload();
         } else {
           this.errorMsg = data.msg;
         }
@@ -77,7 +79,7 @@ export default {
       localStorage.removeItem('username');
       localStorage.removeItem('role');
       this.user = null;
-      location.reload(); // 强制刷新页面
+      location.reload();
     }
   }
 }
