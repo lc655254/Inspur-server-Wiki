@@ -53,11 +53,16 @@ export default {
       const url = this.isRegisterMode ? '/api/user/register' : '/api/user/login';
       try {
         // 正确的请求地址：基础地址 + 路由
-        const res = await fetch('http://api.inspurs.work' + url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(this.form)
-        });
+        const API_BASE = 'http://api.inspurs.work';          // ① 基础地址
+const path = this.isRegisterMode
+    ? '/api/user/register'
+    : '/api/user/login';                             // ② 接口路径
+
+const res = await fetch(API_BASE + path, {            // ③ 拼出来的就是正确的地址
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(this.form)
+});
         const data = await res.json();
         if (data.code === 200) {
           localStorage.setItem('token', data.token);
