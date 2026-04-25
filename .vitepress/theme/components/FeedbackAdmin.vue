@@ -217,7 +217,7 @@ export default {
     async loadFeedbacks() {
       try {
         // 调用后端公开列表接口，管理员登录后会看到所有反馈（包含隐藏）
-        const res = await fetch('https://api.inspurs.work/api/feedback/public/list', {
+        const res = await fetch('http://api.inspurs.work/api/feedback/public/list', {
           headers: { 'Authorization': 'Bearer ' + this.adminToken } // 使用管理员 token
         })
         const data = await res.json()
@@ -239,7 +239,7 @@ export default {
     },
     async updateStatus(fb) {
       try {
-        await fetch(`https://api.inspurs.work/api/feedback/${fb.id}/status`, {
+        await fetch(`http://api.inspurs.work/api/feedback/${fb.id}/status`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -257,7 +257,7 @@ export default {
     },
     async saveProgress(id) {
       try {
-        await fetch(`https://api.inspurs.work/api/feedback/${id}/progress`, {
+        await fetch(`http://api.inspurs.work/api/feedback/${id}/progress`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -275,7 +275,7 @@ export default {
     async deleteFeedback(id) {
       if (!confirm('确定删除该反馈吗？')) return
       try {
-        await fetch(`https://api.inspurs.work/api/feedback/${id}`, {
+        await fetch(`http://api.inspurs.work/api/feedback/${id}`, {
           method: 'DELETE',
           headers: { 'Authorization': 'Bearer ' + this.adminToken }
         })
@@ -287,7 +287,7 @@ export default {
     async clearAll() {
       if (!confirm('确定清空所有反馈吗？此操作不可恢复！')) return
       try {
-        await fetch('https://api.inspurs.work/api/feedback/clear', {
+        await fetch('http://api.inspurs.work/api/feedback/clear', {
           method: 'DELETE',
           headers: { 'Authorization': 'Bearer ' + this.adminToken }
         })
