@@ -194,7 +194,7 @@ export default {
         const token = localStorage.getItem('token');
         const headers = {};
         if (token) headers['Authorization'] = 'Bearer ' + token;
-        const res = await fetch('http://api.inspurs.work/api/feedback/public/list', { headers });
+        const res = await fetch('https://www.inspurs.work/api/feedback/public/list', { headers });
         const data = await res.json();
         this.feedbacks = (data.data || []).map(f => ({
           ...f,
@@ -212,7 +212,7 @@ export default {
       const headers = {};
       if (token) headers['Authorization'] = 'Bearer ' + token;
       try {
-        const res = await fetch(`http://api.inspurs.work/api/feedback/public/${fb.id}`, { headers });
+        const res = await fetch(`https://www.inspurs.work/api/feedback/public/${fb.id}`, { headers });
         const data = await res.json();
         if (data.code === 200) {
           this.selectedFeedback = data.data;
@@ -224,7 +224,7 @@ export default {
       if (!this.loggedIn) return alert('请先登录');
       const token = localStorage.getItem('token');
       try {
-        const res = await fetch(`http://api.inspurs.work/api/feedback/${this.selectedFeedback.id}/vote`, {
+        const res = await fetch(`https://www.inspurs.work/api/feedback/${this.selectedFeedback.id}/vote`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
           body: JSON.stringify({ vote: dir })
@@ -233,7 +233,7 @@ export default {
         if (data.code === 200) {
           this.selectedFeedback.likes = Math.max(0, data.total);
           this.selectedFeedback.dislikes = Math.max(0, -data.total);
-          const vRes = await fetch(`http://api.inspurs.work/api/feedback/${this.selectedFeedback.id}/votes`, {
+          const vRes = await fetch(`https://www.inspurs.work/api/feedback/${this.selectedFeedback.id}/votes`, {
             headers: { 'Authorization': 'Bearer ' + token }
           });
           const vData = await vRes.json();
@@ -245,7 +245,7 @@ export default {
       if (!this.loggedIn) return alert('请先登录');
       const token = localStorage.getItem('token');
       try {
-        const res = await fetch(`http://api.inspurs.work/api/comment/${comment.id}/vote`, {
+        const res = await fetch(`https://www.inspurs.work/api/comment/${comment.id}/vote`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
           body: JSON.stringify({ vote: dir })
@@ -254,7 +254,7 @@ export default {
         if (data.code === 200) {
           comment.likes = Math.max(0, data.total);
           comment.dislikes = Math.max(0, -data.total);
-          const vRes = await fetch(`http://api.inspurs.work/api/comment/${comment.id}/votes`, {
+          const vRes = await fetch(`https://www.inspurs.work/api/comment/${comment.id}/votes`, {
             headers: { 'Authorization': 'Bearer ' + token }
           });
           const vData = await vRes.json();
@@ -266,7 +266,7 @@ export default {
       if (!this.newComment.trim()) return;
       const token = localStorage.getItem('token');
       try {
-        const res = await fetch(`http://api.inspurs.work/api/feedback/${this.selectedFeedback.id}/comment`, {
+        const res = await fetch(`https://www.inspurs.work/api/feedback/${this.selectedFeedback.id}/comment`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
           body: JSON.stringify({ content: this.newComment })
@@ -296,7 +296,7 @@ export default {
       if (!confirm('确定删除该评论？')) return;
       const token = localStorage.getItem('token');
       try {
-        await fetch(`http://api.inspurs.work/api/comment/${commentId}`, {
+        await fetch(`https://www.inspurs.work/api/comment/${commentId}`, {
           method: 'DELETE', headers: { 'Authorization': 'Bearer ' + token }
         });
         this.comments = this.comments.filter(c => c.id !== commentId);
@@ -306,7 +306,7 @@ export default {
       const token = localStorage.getItem('token');
       const newHidden = fb.hidden ? 0 : 1;
       try {
-        await fetch(`http://api.inspurs.work/api/feedback/${fb.id}/hide`, {
+        await fetch(`https://www.inspurs.work/api/feedback/${fb.id}/hide`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
           body: JSON.stringify({ hidden: newHidden })
@@ -318,7 +318,7 @@ export default {
       if (!confirm('确定删除该反馈？')) return;
       const token = localStorage.getItem('token');
       try {
-        await fetch(`http://api.inspurs.work/api/feedback/${id}`, {
+        await fetch(`https://www.inspurs.work/api/feedback/${id}`, {
           method: 'DELETE', headers: { 'Authorization': 'Bearer ' + token }
         });
         this.view = 'list';
