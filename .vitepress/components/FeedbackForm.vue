@@ -109,7 +109,7 @@ export default {
       this.submitting = true;
       const token = localStorage.getItem('token');
       try {
-        const res = await fetch('http://api.inspurs.work/api/feedback/submit', {
+        const res = await fetch('https://www.inspurs.work/api/feedback/submit', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

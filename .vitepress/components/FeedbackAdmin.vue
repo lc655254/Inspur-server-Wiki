@@ -189,7 +189,7 @@ export default {
     },
     async loadFeedbacks() {
       try {
-        const res = await fetch('http://api.inspurs.work/api/feedback/public/list', {
+        const res = await fetch('https://www.inspurs.work/api/feedback/public/list', {
           headers: { 'Authorization': 'Bearer ' + this.adminToken }
         })
         const data = await res.json()
@@ -211,7 +211,7 @@ export default {
     },
     async updateStatus(fb) {
       try {
-        await fetch(`http://api.inspurs.work/api/feedback/${fb.id}/status`, {
+        await fetch(`https://www.inspurs.work/api/feedback/${fb.id}/status`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -229,7 +229,7 @@ export default {
     },
     async saveProgress(id) {
       try {
-        await fetch(`http://api.inspurs.work/api/feedback/${id}/progress`, {
+        await fetch(`https://www.inspurs.work/api/feedback/${id}/progress`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -247,7 +247,7 @@ export default {
     async deleteFeedback(id) {
       if (!confirm('确定删除该反馈吗？')) return
       try {
-        await fetch(`http://api.inspurs.work/api/feedback/${id}`, {
+        await fetch(`https://www.inspurs.work/api/feedback/${id}`, {
           method: 'DELETE',
           headers: { 'Authorization': 'Bearer ' + this.adminToken }
         })
@@ -259,7 +259,7 @@ export default {
     async clearAll() {
       if (!confirm('确定清空所有反馈吗？此操作不可恢复！')) return
       try {
-        await fetch(`http://api.inspurs.work/api/feedback/clear`, {
+        await fetch(`https://www.inspurs.work/api/feedback/clear`, {
           method: 'DELETE',
           headers: { 'Authorization': 'Bearer ' + this.adminToken }
         })
