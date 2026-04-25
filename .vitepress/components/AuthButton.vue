@@ -51,7 +51,7 @@ export default {
       this.errorMsg = '';
       const url = this.isRegisterMode ? '/api/user/register' : '/api/user/login';
       try {
-        const res = await fetch('https://www.inspurs.work' + url, {
+        const res = await fetch('https://api.inspurs.work/api' + url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(this.form)
